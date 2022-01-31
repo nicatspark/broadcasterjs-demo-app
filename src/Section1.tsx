@@ -1,20 +1,20 @@
-import React from "react";
-import { Button } from "./Button";
-import { broadcast } from "./broadcast";
+import React from 'react'
+import { Button } from './Button'
+import { broadcast } from './broadcast'
 
 interface ChildrenAndProps {
-  children?: JSX.Element;
+  children?: JSX.Element
 }
 
 export const Section1 = ({ children }: ChildrenAndProps): JSX.Element => {
   const handleButton = () => {
-    broadcast.emit("my-flag", Date.now());
-  };
+    broadcast.emit('my-flag', Date.now())
+  }
 
   return (
-    <section>
+    <div className='section'>
       <p>Emitter</p>
       <Button onClick={handleButton} />
-    </section>
-  );
-};
+    </div>
+  )
+}

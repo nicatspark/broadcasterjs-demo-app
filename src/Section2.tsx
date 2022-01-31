@@ -3,7 +3,7 @@ import { broadcast } from './broadcast'
 import styled from 'styled-components'
 import { sleep } from './helpers'
 
-const Section = styled.section`
+const Section = styled.div`
   transition: border-color 5s, background-color 5s;
   &.rerendered {
     border-color: #02d814;
@@ -58,7 +58,7 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
   }, [start])
 
   return (
-    <Section className='receiver'>
+    <Section className='receiver section'>
       <p>Receiver</p>
       <div>{sec}s since last render</div>
     </Section>

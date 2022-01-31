@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { broadcast } from './broadcast'
-import { IconMenu } from './IconMenu'
 import { sleep } from './helpers'
+import { IconMenu } from './IconMenu'
 
 const DrawerNav = styled.nav`
   position: fixed;
@@ -14,7 +14,7 @@ const DrawerNav = styled.nav`
   width: min(90%, 200px);
   height: 100vh;
   padding: 1rem;
-  transform: translateX(calc(-100% + 3rem));
+  transform: translateX(calc(-100% + var(--menu-min-width)));
   transition: transform 150ms ease-out;
   &.open {
     transform: translateX(0px);
@@ -50,31 +50,50 @@ const Cover = styled.div`
   }
 `
 
+let autoCloseId: ReturnType<typeof setTimeout>[] = []
+
 export const Drawer = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showPieTimer, setShowPieTimer] = useState(false)
   const drawer = useRef<HTMLElement | null>(null)
 
-  const handleDrawerClick = (e: React.SyntheticEvent) => {
+  const handleDrawerClick = (e?: React.SyntheticEvent) => {
     broadcast.emit('menu-toggled')
     setDrawerOpen((toggel) => !toggel)
     setShowPieTimer(false)
+    if (!e) return
     const el = e.currentTarget as HTMLElement
     setTimeout(() => el?.blur(), 800)
-    autoCloseAfterDelay(8000)
-
-    async function autoCloseAfterDelay(delay: number) {
-      await sleep(delay)
-      if (!drawer.current?.classList.contains('open')) return
-      setShowPieTimer(true)
-      await sleep(3000)
-      setDrawerOpen(false)
-      setShowPieTimer(false)
-    }
+    autoCloseAfterDelay()
   }
 
-  const gotoPage = (page: number) => {
+  async function autoCloseAfterDelay(delay = 8000) {
+    const pieDelay = 3000
+    const id = setTimeout(async () => {
+      if (!drawer.current?.classList.contains('open')) return
+      setShowPieTimer(true)
+      const id = setTimeout(() => {
+        setDrawerOpen(false)
+        setShowPieTimer(false)
+      }, pieDelay)
+      autoCloseId.push(id)
+    }, delay)
+    autoCloseId.push(id)
+  }
+
+  const gotoPage = async (page: number) => {
     broadcast.emit('set-page', page)
+    await sleep(300)
+    handleDrawerClick()
+  }
+
+  const handleOnMouseOver = () => {
+    console.log(autoCloseId)
+    autoCloseId.map((id) => clearTimeout(id))
+    setShowPieTimer(false)
+  }
+  const handleOnMouseOut = () => {
+    autoCloseAfterDelay(1000)
   }
 
   return (
@@ -84,12 +103,15 @@ export const Drawer = () => {
         ref={drawer}
         ariaLabel='Main navigation'
         className={drawerOpen ? `open` : ''}
+        onMouseEnter={handleOnMouseOver}
+        onMouseLeave={handleOnMouseOut}
       >
         <IconMenu onClick={handleDrawerClick} showPieTimer={showPieTimer} />
         <ul>
           <li onClick={() => gotoPage(1)}>Get started</li>
           <li onClick={() => gotoPage(2)}>Benefits</li>
           <li onClick={() => gotoPage(3)}>Live example</li>
+          <li onClick={() => gotoPage(4)}>Source code</li>
         </ul>
       </DrawerNav>
     </>
