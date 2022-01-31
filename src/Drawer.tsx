@@ -73,6 +73,10 @@ export const Drawer = () => {
     }
   }
 
+  const gotoPage = (page: number) => {
+    broadcast.emit('set-page', page)
+  }
+
   return (
     <>
       <Cover className={drawerOpen ? `open` : ''} onClick={handleDrawerClick} />
@@ -83,9 +87,9 @@ export const Drawer = () => {
       >
         <IconMenu onClick={handleDrawerClick} showPieTimer={showPieTimer} />
         <ul>
-          <li>Get started</li>
-          <li>Benefits</li>
-          <li>Live example</li>
+          <li onClick={() => gotoPage(1)}>Get started</li>
+          <li onClick={() => gotoPage(2)}>Benefits</li>
+          <li onClick={() => gotoPage(3)}>Live example</li>
         </ul>
       </DrawerNav>
     </>

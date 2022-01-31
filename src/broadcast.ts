@@ -128,9 +128,6 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 START SUBSCRIPTION IN REACT
 useEffect(() => {
   broadcast.on(['flag-name', flagReceivedFunction])
-  return () => {
-    broadcast.off(['flag-name', flagReceivedFunction])
-  }
 }, [flagReceivedFunction])
 
 START SUBSCRIPTION VANILLA JS
