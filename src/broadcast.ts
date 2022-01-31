@@ -50,6 +50,7 @@ const eventBus = (): returnType => {
     )
   }
   const emit = (type: string, detail?: unknown): boolean => {
+    console.log(`Broadcast: ${type}`)
     const eventTarget = createOrGetCustomEventNode(hubId)
     return eventTarget.dispatchEvent(
       new CustomEvent('broadcast-' + type, { detail })

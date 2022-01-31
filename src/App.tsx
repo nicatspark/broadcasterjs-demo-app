@@ -1,8 +1,8 @@
-import React from 'react'
 import './styles.css'
 
 import { Section1 } from './Section1'
 import { Section2 } from './Section2'
+import { Drawer } from './Drawer'
 
 export default function App() {
   return (
@@ -13,6 +13,7 @@ export default function App() {
         <Section1 />
         <Section2 />
       </div>
+      <Drawer />
     </div>
   )
 }

@@ -1,5 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { broadcast } from './broadcast'
+import styled from 'styled-components'
+import { sleep } from './helpers'
+
+const Section = styled.section`
+  transition: border-color 5s, background-color 5s;
+  &.rerendered {
+    border-color: #02d814;
+    background-color: #b3ceb5;
+    transition: none;
+  }
+`
 
 interface ChildrenAndProps {
   children?: JSX.Element
@@ -13,8 +24,19 @@ type ActionType = [
 export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
   const start = useRef(Date.now())
   start.current = Date.now()
-  console.log('rerender', start)
   const [sec, setSec] = useState(0)
+  // Highlight every render in UI.
+  ;({
+    do: async function () {
+      const a = document.querySelector('.receiver') as HTMLDivElement
+      if (!a) return
+      a.classList.remove('rerendered')
+      await sleep(10)
+      a.classList.add('rerendered')
+      await sleep(10)
+      a.classList.remove('rerendered')
+    },
+  }.do())
 
   useEffect(() => {
     const seconds = (detail: number) =>
@@ -31,13 +53,14 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
       },
     ]
     broadcast.on(action as ActionType)
+    // Investogate why this is not needed.
     // return () => broadcast.off(action as ActionType)
   }, [start])
 
   return (
-    <section>
+    <Section className='receiver'>
       <p>Receiver</p>
       <div>{sec}s since last render</div>
-    </section>
+    </Section>
   )
 }
