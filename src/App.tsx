@@ -2,7 +2,7 @@ import './styles.css'
 
 import { Drawer } from './Drawer'
 import { useEffect, useState } from 'react'
-import { broadcast } from './broadcast'
+import { broadcast } from './scripts/broadcast'
 import { Pages } from './pages/pages.styles'
 import { PageCode } from './pages/PageCode'
 import { Header } from './Header'
@@ -10,6 +10,7 @@ import { Footer } from './Footer'
 import { PageGetStarted } from './pages/PageGetStarted'
 import { PageBenefits } from './pages/PageBenefits'
 import { PageExamples } from './pages/PageExamples'
+import { PageDebug } from './pages/PageDebug'
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -30,6 +31,7 @@ export default function App() {
         <PageBenefits />
         <PageExamples />
         <PageCode />
+        <PageDebug />
       </Pages>
       <Footer />
       <Drawer />

@@ -11,7 +11,7 @@ export const PageCode = () => {
     <Page>
       <h1>The source code</h1>
       <p className='center'>broadcast.ts</p>
-      <pre className='line-numbers'>
+      <pre className='big line-numbers'>
         <code className='language-ts'>
           {`
       type ListenerProps = <T extends unknown>([type, listener]: [

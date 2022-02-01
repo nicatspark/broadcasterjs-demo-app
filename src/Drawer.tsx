@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { broadcast } from './broadcast'
-import { sleep } from './helpers'
+import { broadcast } from './scripts/broadcast'
+import { sleep } from './scripts/helpers'
 import { IconMenu } from './IconMenu'
 
 const DrawerNav = styled.nav`
@@ -112,6 +112,7 @@ export const Drawer = () => {
           <li onClick={() => gotoPage(2)}>Benefits</li>
           <li onClick={() => gotoPage(3)}>Live example</li>
           <li onClick={() => gotoPage(4)}>Source code</li>
+          <li onClick={() => gotoPage(5)}>Debug</li>
         </ul>
       </DrawerNav>
     </>

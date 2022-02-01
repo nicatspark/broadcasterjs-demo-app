@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { broadcast } from './broadcast'
+import { broadcast } from './scripts/broadcast'
 
 const PageflipperDiv = styled.div`
   width: 7rem;
@@ -45,7 +45,7 @@ export const Pageflipper = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const leftTri = useRef<HTMLElement | null>(null)
   const rightTri = useRef<HTMLElement | null>(null)
-  const maxNumberOfPage = 4
+  const maxNumberOfPage = 5
 
   useEffect(() => {
     broadcast.on([

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { broadcast } from './broadcast'
+import { broadcast } from './scripts/broadcast'
 import styled from 'styled-components'
 
 const Section = styled.div`

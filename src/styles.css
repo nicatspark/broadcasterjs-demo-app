@@ -65,10 +65,14 @@ header h1 {
   gap: 1rem;
 }
 
-pre {
+pre.big {
   height: 300px;
   overflow: scroll;
   box-shadow: inset 0 0 3px 3px rgba(0 0 0/ 0.2);
+}
+
+details {
+  font-size: 0.8rem;
 }
 
 .center {

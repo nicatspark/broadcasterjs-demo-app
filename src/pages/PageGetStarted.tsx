@@ -19,8 +19,11 @@ export const PageGetStarted = () => {
         <code>{`broadcast.emit('example-flag', {detail: myData})`}</code>
       </Block>
       <p className='limited'>
-        Use it once or architect your whole web app infrastructure around
-        events. Either way this gem of code will suit your needs.
+        BroadcastJS is a pub/sub event transmitter written in typescript. A
+        subscriber in one part of your app is always ready to execute a function
+        triggered from another part of your app. With or without arguments. Use
+        it once or architect your whole web app infrastructure around events.
+        Either way this gem of code will suit your needs.
       </p>
       <p className='limited'>
         BroadcasterJS is framework agnostic and therefor doesn't in itself
