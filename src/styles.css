@@ -83,7 +83,7 @@ pre {
   border-radius: 50%;
   position: relative;
   border: 0.05em solid var(--color);
-  --color: #666;
+  --color: #000;
 }
 .pie::before,
 .pie::after {

@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { broadcast } from './broadcast'
 import styled from 'styled-components'
-import { sleep } from './helpers'
 
 const Section = styled.div`
-  transition: border-color 5s, background-color 5s;
+  transition: border-color 3s, background-color 3s;
   &.rerendered {
     border-color: yellow;
     background-color: yellow;
@@ -27,14 +26,15 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
   const [sec, setSec] = useState(0)
   // Highlight every render in UI.
   ;({
-    do: async function () {
+    do: function () {
       const a = document.querySelector('.receiver') as HTMLDivElement
       if (!a) return
       a.classList.remove('rerendered')
-      await sleep(10)
-      a.classList.add('rerendered')
-      await sleep(10)
-      a.classList.remove('rerendered')
+      setTimeout(() => {
+        a.classList.add('rerendered')
+        console.log('rerender', a)
+        setTimeout(() => a.classList.remove('rerendered'), 500)
+      })
     },
   }.do())
 
