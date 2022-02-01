@@ -6,8 +6,8 @@ import { sleep } from './helpers'
 const Section = styled.div`
   transition: border-color 5s, background-color 5s;
   &.rerendered {
-    border-color: #02d814;
-    background-color: #b3ceb5;
+    border-color: yellow;
+    background-color: yellow;
     transition: none;
   }
 `
@@ -42,7 +42,7 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
     const seconds = (detail: number) =>
       Math.floor((detail - start.current) / 1000)
     const action = [
-      'my-flag',
+      'example-flag',
       ({ detail }: { detail: number }) => {
         console.log(
           'asd',

@@ -1,3 +1,14 @@
 {
-  "plugins": ["babel-plugin-styled-components"]
+  "plugins": [
+    "babel-plugin-styled-components",
+    [
+      "prismjs",
+      {
+        "languages": ["typescript", "css", "html"],
+        "plugins": ["line-numbers", "show-language"],
+        "theme": "okaidia",
+        "css": true
+      }
+    ]
+  ]
 }

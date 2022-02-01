@@ -11,6 +11,7 @@ interface returnType {
 }
 
 let broadcastItemsCache: string[] = []
+const debug = true
 
 const eventBus = (): returnType => {
   const hubId = ' broadcast-node '
@@ -50,7 +51,7 @@ const eventBus = (): returnType => {
     )
   }
   const emit = (type: string, detail?: unknown): boolean => {
-    console.log(`Broadcast: ${type}`)
+    debugmode(type, detail)
     const eventTarget = createOrGetCustomEventNode(hubId)
     return eventTarget.dispatchEvent(
       new CustomEvent('broadcast-' + type, { detail })
@@ -78,7 +79,7 @@ const eventBus = (): returnType => {
   function handleCache() {
     const listenerExists = (type: string, listener: unknown) => {
       const id = createBroadcastId(type, listener)
-      console.log('broadcastItemsCache', broadcastItemsCache)
+      debugmode('broadcastItemsCache', broadcastItemsCache)
       if (broadcastItemsCache.includes(type + id)) return true
       broadcastItemsCache.push(type + id)
       return false
@@ -117,6 +118,11 @@ const eventBus = (): returnType => {
       JSON.stringify({ src: f.toString(), env: env })
     return { serializeFn, hashCode }
   }
+
+  function debugmode(type: string, obj?: unknown) {
+    if (!debug) return
+    console.log(`Broadcast: ${type}`, obj ? obj : '--')
+  }
 }
 const broadcast = eventBus()
 export { broadcast }
@@ -127,28 +133,28 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 
 START SUBSCRIPTION IN REACT
 useEffect(() => {
-  broadcast.on(['flag-name', flagReceivedFunction])
+  broadcast.on(['broadcast-name', flagReceivedFunction])
 }, [flagReceivedFunction])
 
 START SUBSCRIPTION VANILLA JS
-broacaster.on('event-name', ({ detail }) => {
+broacaster.on(['broadcast-name', ({ detail }) => {
     document.body.append(detail + ' ');
-});
-broacaster.once('event-name', ({ detail }) => {
+}]);
+broacaster.once(['broadcast-name', ({ detail }) => {
     document.body.append(detail + ' ');
-});
+}]);
 
 END SUBSCRIPTION
-broacaster.off('event-name', ({ detail }) => {
+broacaster.off(['broadcast-name', ({ detail }) => {
     document.body.append(detail + ' ');
-});
+}]);
 
 PUBLISH IN REACT
-broadcast.emit('flag-name', 'Hello world')
+broadcast.emit('broadcast-name', 'Hello world')
 
 PUBLISH
-broacaster.emit('event-name', 'Hello'); // => Hello Hello
-broacaster.emit('event-name', 'World'); // => World
+broacaster.emit('broadcast-name', 'Hello'); // => Hello
+broacaster.emit('broadcast-name', 'World'); // => World
 
 TO INSPECT VISUALLY
 Click elements tab i devtools, click event-listeners tab. 

@@ -14,6 +14,7 @@ export const IconMenu = ({ onClick, showPieTimer }: Props) => {
           role='button'
           tabIndex={1}
           onClick={onClick}
+          onKeyPress={onClick}
           width='16'
           height='16'
           viewBox='0 0 16 16'

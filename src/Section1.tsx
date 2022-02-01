@@ -8,7 +8,7 @@ interface ChildrenAndProps {
 
 export const Section1 = ({ children }: ChildrenAndProps): JSX.Element => {
   const handleButton = () => {
-    broadcast.emit('my-flag', Date.now())
+    broadcast.emit('example-flag', Date.now())
   }
 
   return (
