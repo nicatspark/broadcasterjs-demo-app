@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { broadcast } from './scripts/broadcast'
 import { sleep } from './scripts/helpers'
 import { IconMenu } from './IconMenu'
+import { useEffect } from 'react'
 
 const DrawerNav = styled.nav`
   position: fixed;
@@ -28,14 +29,20 @@ const DrawerNav = styled.nav`
       border-bottom: 1px solid #eee;
       margin-right: 2rem;
       margin-bottom: 0.5rem;
+      position: relative;
       cursor: pointer;
+      &.active {
+        cursor: default;
+        &:after {
+          content: '';
+          position: absolute;
+          left: -1rem;
+          width: 6px;
+          height: 100%;
+          background-color: #000;
+        }
+      }
     }
-  }
-  .navicon {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
   }
 `
 const Cover = styled.div`
@@ -55,6 +62,7 @@ let autoCloseId: ReturnType<typeof setTimeout>[] = []
 export const Drawer = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showPieTimer, setShowPieTimer] = useState(false)
+  const [page, setPage] = useState(1)
   const drawer = useRef<HTMLElement | null>(null)
 
   const handleDrawerClick = (e?: React.SyntheticEvent) => {
@@ -81,8 +89,9 @@ export const Drawer = () => {
     autoCloseId.push(id)
   }
 
-  const gotoPage = async (page: number) => {
-    broadcast.emit('set-page', page)
+  const gotoPage = async (pagenr: number) => {
+    broadcast.emit('set-page', pagenr)
+    setPage(pagenr)
     await sleep(300)
     handleDrawerClick()
   }
@@ -96,6 +105,11 @@ export const Drawer = () => {
     autoCloseAfterDelay(1000)
   }
 
+  // resets to page on localy
+  useEffect(() => {
+    broadcast.emit('set-page', 1)
+  }, [])
+
   return (
     <>
       <Cover className={drawerOpen ? `open` : ''} onClick={handleDrawerClick} />
@@ -108,11 +122,36 @@ export const Drawer = () => {
       >
         <IconMenu onClick={handleDrawerClick} showPieTimer={showPieTimer} />
         <ul>
-          <li onClick={() => gotoPage(1)}>Get started</li>
-          <li onClick={() => gotoPage(2)}>Benefits</li>
-          <li onClick={() => gotoPage(3)}>Live example</li>
-          <li onClick={() => gotoPage(4)}>Source code</li>
-          <li onClick={() => gotoPage(5)}>Debug</li>
+          <li
+            onClick={() => gotoPage(1)}
+            className={page === 1 ? 'active' : ''}
+          >
+            Get started
+          </li>
+          <li
+            onClick={() => gotoPage(2)}
+            className={page === 2 ? 'active' : ''}
+          >
+            Benefits
+          </li>
+          <li
+            onClick={() => gotoPage(3)}
+            className={page === 3 ? 'active' : ''}
+          >
+            Live example
+          </li>
+          <li
+            onClick={() => gotoPage(4)}
+            className={page === 4 ? 'active' : ''}
+          >
+            Source code
+          </li>
+          <li
+            onClick={() => gotoPage(5)}
+            className={page === 5 ? 'active' : ''}
+          >
+            Debug
+          </li>
         </ul>
       </DrawerNav>
     </>

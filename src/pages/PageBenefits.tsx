@@ -20,7 +20,8 @@ export const PageBenefits = () => {
           </li>
         </ul>
         <h2>
-          Benefits of using <mark>custom events</mark> (behind an api)
+          Benefits of using <mark>custom events</mark>. (encapsulated in
+          BroadcasterJS)
         </h2>
         <ul>
           <li>Framework agnostic.</li>

@@ -32,7 +32,7 @@ export const PageGetStarted = () => {
         anywhere.
       </p>
       <Block limit='30rem'>
-        <p>Subscribe in React:</p>
+        <p>In React wrap the subscriber in a useEffect:</p>
         <code>{`useEffect(() => {\n
               broadcast.on(['example-flag', () => setMyUseState(true)])\n
             }, [])`}</code>

@@ -1,3 +1,18 @@
+import styled from 'styled-components'
+const NaviconWrapper = styled.div`
+  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--menu-min-width);
+  height: var(--menu-min-width);
+  display: grid;
+  place-items: center;
+  .navicon {
+    cursor: pointer;
+  }
+`
+
 interface Props {
   onClick: (e: React.SyntheticEvent) => void
   showPieTimer: boolean
@@ -5,16 +20,17 @@ interface Props {
 
 export const IconMenu = ({ onClick, showPieTimer }: Props) => {
   return (
-    <>
+    <NaviconWrapper
+      onKeyPress={onClick}
+      onClick={onClick}
+      role='button'
+      tabIndex={1}
+    >
       {showPieTimer ? (
         <div className='pie navicon'></div>
       ) : (
         <svg
           className='navicon'
-          role='button'
-          tabIndex={1}
-          onClick={onClick}
-          onKeyPress={onClick}
           width='16'
           height='16'
           viewBox='0 0 16 16'
@@ -28,6 +44,6 @@ export const IconMenu = ({ onClick, showPieTimer }: Props) => {
           <line x1='2' y1='12.5' x2='14' y2='12.5' stroke='black' />
         </svg>
       )}
-    </>
+    </NaviconWrapper>
   )
 }

@@ -8,6 +8,8 @@ export const Pages = styled.div`
   display: flex;
   flex-flow: row nowrap;
   transition: transform 300ms ease-out;
+  position: relative;
+  left: 0;
 `
 
 export const Page = styled.div`

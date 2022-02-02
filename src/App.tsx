@@ -23,6 +23,10 @@ export default function App() {
     ])
   }, [])
 
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [])
+
   return (
     <div className='App'>
       <Header />
