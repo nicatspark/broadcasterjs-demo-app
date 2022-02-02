@@ -25,6 +25,7 @@ body {
 
 .App {
   font-family: 'Roboto mono', sans-serif;
+  overflow: hidden;
 }
 
 header {

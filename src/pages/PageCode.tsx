@@ -139,6 +139,12 @@ export const PageCode = () => {
     `}
         </code>
       </pre>
+      <p className='limited'>
+        Source code for this site here:{' '}
+        <a href='https://github.com/nicatspark/broadcasterjs'>
+          https://github.com/nicatspark/broadcasterjs
+        </a>
+      </p>
     </Page>
   )
 }
