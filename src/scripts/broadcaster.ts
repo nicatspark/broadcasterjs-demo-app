@@ -104,7 +104,12 @@ const eventBus = (): returnType => {
       case 'object':
       case 'boolean':
       case 'string':
-        detailsStringified = JSON.stringify(details)
+      case 'number':
+        try {
+          detailsStringified = JSON.stringify(details)
+        } catch (err) {
+          throw new Error('Could not JSON.stringify the broadcasterjs payload.')
+        }
         break
       case 'function':
         detailsStringified = helpers().serializeFn(details as () => void, {})
