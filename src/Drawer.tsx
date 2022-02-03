@@ -120,7 +120,11 @@ export const Drawer = () => {
         onMouseEnter={handleOnMouseOver}
         onMouseLeave={handleOnMouseOut}
       >
-        <IconMenu onClick={handleDrawerClick} showPieTimer={showPieTimer} />
+        <IconMenu
+          className={drawerOpen ? `open` : ''}
+          onClick={handleDrawerClick}
+          showPieTimer={showPieTimer}
+        />
         <ul>
           <li
             onClick={() => gotoPage(1)}

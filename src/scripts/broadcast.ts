@@ -11,7 +11,9 @@ interface returnType {
 }
 
 let broadcastItemsCache: string[] = []
-const debug = true
+
+const debug =
+  new URLSearchParams(window.location.search).get('debug') === 'broadcastjs'
 
 const eventBus = (): returnType => {
   const hubId = ' broadcast-node '
@@ -157,6 +159,9 @@ broacaster.emit('broadcast-name', 'Hello'); // => Hello
 broacaster.emit('broadcast-name', 'World'); // => World
 
 TO INSPECT VISUALLY
-Click elements tab i devtools, click event-listeners tab. 
+Click elements tab i chrome devtools, 
+click event-listeners tab in second pane. 
 Active listeners begin with 'broadcast-' + flag name.
+
+To debug: add ?debug=broadcastjs
 */
