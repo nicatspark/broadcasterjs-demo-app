@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from './Button'
-import { broadcast } from './scripts/broadcast'
+import { broadcast } from './scripts/broadcaster'
 
 interface ChildrenAndProps {
   children?: JSX.Element

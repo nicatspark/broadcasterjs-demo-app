@@ -36,7 +36,7 @@ export const PageBenefits = () => {
           <sup>*</sup>
           <i>depending in mfe setup</i>
         </p>
-        <h2>Prerequisites and requirements before creation of the pub/sub</h2>
+        <h2>Prerequisites and requirements before creation of BroadcasterJS</h2>
         <ul>
           <li>Easy to use.</li>
           <li>No initialization.</li>

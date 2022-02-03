@@ -5,7 +5,7 @@ export const PageDebug = () => {
     <Page>
       <h1>Debug</h1>
       <p className='limited'>
-        So you implmented it and then things went south. Well, here is how to
+        So you implemented it and then things went south. Well, here is how to
         debug.
       </p>
       <p className='limited'>You can:</p>
@@ -24,19 +24,24 @@ export const PageDebug = () => {
         </li>
         <li>
           <summary className='limited'>
-            Activate debugmode <mark>globaly</mark> that outputs all events to
+            Activate a <mark>global</mark> debugmode that outputs all events to
             the console log.
+            <details>
+              Add <mark>?debug=broadcaster</mark> to your url and open the
+              devtools console.
+            </details>
           </summary>
         </li>
         <li>
           <summary className='limited'>
             Activate debugmode <mark>localy</mark> that outputs all events to
             the console log.
+            <details>See the example below.</details>
           </summary>
         </li>
       </ul>
       <Block limit='30rem'>
-        <p>Subscribe with debug localy:</p>
+        <p>Subscribe with debug localy: (comming soon)</p>
         <pre>
           <code style={{ lineHeight: '1.5rem' }}>
             {`broadcast.on(['example-flag', () => {

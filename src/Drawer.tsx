@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { broadcast } from './scripts/broadcast'
+import { broadcast } from './scripts/broadcaster'
 import { sleep } from './scripts/helpers'
 import { IconMenu } from './IconMenu'
 import { useEffect } from 'react'

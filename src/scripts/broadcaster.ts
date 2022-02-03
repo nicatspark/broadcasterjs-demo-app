@@ -13,7 +13,7 @@ interface returnType {
 let broadcastItemsCache: string[] = []
 
 const debug =
-  new URLSearchParams(window.location.search).get('debug') === 'broadcastjs'
+  new URLSearchParams(window.location.search).get('debug') === 'BroadcasterJS'
 
 const eventBus = (): returnType => {
   const hubId = ' broadcast-node '
@@ -131,7 +131,7 @@ export { broadcast }
 
 // Usage
 /*
-No need to initialize separately. Import the 'broadcast' factory function and use.
+No need to initialize separately. Import the 'broadcast' factory function and use to your hearts content.
 
 START SUBSCRIPTION IN REACT
 useEffect(() => {
@@ -151,17 +151,13 @@ broacaster.off(['broadcast-name', ({ detail }) => {
     document.body.append(detail + ' ');
 }]);
 
-PUBLISH IN REACT
+PUBLISH IN REACT & VANILLLA JS
 broadcast.emit('broadcast-name', 'Hello world')
-
-PUBLISH
-broacaster.emit('broadcast-name', 'Hello'); // => Hello
-broacaster.emit('broadcast-name', 'World'); // => World
 
 TO INSPECT VISUALLY
 Click elements tab i chrome devtools, 
 click event-listeners tab in second pane. 
 Active listeners begin with 'broadcast-' + flag name.
 
-To debug: add ?debug=broadcastjs
+To debug: add ?debug=BroadcasterJS
 */

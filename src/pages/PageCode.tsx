@@ -10,7 +10,7 @@ export const PageCode = () => {
   return (
     <Page>
       <h1>The source code</h1>
-      <p className='center'>broadcast.ts</p>
+      <p className='center'>broadcaster.ts</p>
       <pre className='big line-numbers'>
         <code className='language-ts'>
           {`
@@ -29,7 +29,7 @@ export const PageCode = () => {
       let broadcastItemsCache: string[] = []
       
       const debug =
-        new URLSearchParams(window.location.search).get('debug') === 'broadcastjs'
+        new URLSearchParams(window.location.search).get('debug') === 'BroadcasterJS'
       
       const eventBus = (): returnType => {
         const hubId = ' broadcast-node '

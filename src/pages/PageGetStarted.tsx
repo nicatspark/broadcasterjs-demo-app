@@ -9,7 +9,7 @@ export const PageGetStarted = () => {
         pub/sub event bus today!
       </p>
       <Block limit='30rem'>
-        <p>Import broadcast.ts</p>
+        <p>Import broadcaster.ts</p>
         <code>import broadcast from "./broadcast";</code>
         <p>Subscribe:</p>
         <code>{`broadcast.on(['example-flag', () => setMyUseState(true)])`}</code>
@@ -19,7 +19,7 @@ export const PageGetStarted = () => {
         <code>{`broadcast.emit('example-flag', {detail: myData})`}</code>
       </Block>
       <p className='limited'>
-        BroadcastJS is a pub/sub event transmitter written in typescript. A
+        BroadcasterJS is a pub/sub event transmitter written in typescript. A
         subscriber in one part of your app is always ready to execute a function
         triggered from another part of your app. With or without arguments. Use
         it once or architect your whole web app infrastructure around events.
@@ -33,9 +33,12 @@ export const PageGetStarted = () => {
       </p>
       <Block limit='30rem'>
         <p>In React wrap the subscriber in a useEffect:</p>
-        <code>{`useEffect(() => {\n
-              broadcast.on(['example-flag', () => setMyUseState(true)])\n
-            }, [])`}</code>
+        {/* // prettier-ignore */}
+        <pre style={{ lineHeight: '1.5rem' }}>
+          <code>{`useEffect(() => {
+    broadcast.on(['example-flag', () => setMyUseState(true)])
+  }, [])`}</code>
+        </pre>
       </Block>
     </Page>
   )
