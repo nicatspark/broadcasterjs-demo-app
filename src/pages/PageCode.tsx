@@ -28,6 +28,9 @@ export const PageCode = () => {
       
       let broadcastItemsCache: string[] = []
       
+      const debug =
+        new URLSearchParams(window.location.search).get('debug') === 'broadcastjs'
+      
       const eventBus = (): returnType => {
         const hubId = ' broadcast-node '
       
@@ -66,7 +69,7 @@ export const PageCode = () => {
           )
         }
         const emit = (type: string, detail?: unknown): boolean => {
-          console.log(\`Broadcast: \${type}\`)
+          debugmode(type, detail)
           const eventTarget = createOrGetCustomEventNode(hubId)
           return eventTarget.dispatchEvent(
             new CustomEvent('broadcast-' + type, { detail })
@@ -94,7 +97,7 @@ export const PageCode = () => {
         function handleCache() {
           const listenerExists = (type: string, listener: unknown) => {
             const id = createBroadcastId(type, listener)
-            console.log('broadcastItemsCache', broadcastItemsCache)
+            debugmode('broadcastItemsCache', broadcastItemsCache)
             if (broadcastItemsCache.includes(type + id)) return true
             broadcastItemsCache.push(type + id)
             return false
@@ -132,6 +135,11 @@ export const PageCode = () => {
           const serializeFn = (f: () => void, env: unknown) =>
             JSON.stringify({ src: f.toString(), env: env })
           return { serializeFn, hashCode }
+        }
+      
+        function debugmode(type: string, obj?: unknown) {
+          if (!debug) return
+          console.log(\`Broadcast: \${type}\`, obj ? obj : '--')
         }
       }
       const broadcast = eventBus()
