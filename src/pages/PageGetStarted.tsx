@@ -28,8 +28,7 @@ export const PageGetStarted = () => {
       <p className='limited'>
         BroadcasterJS is framework agnostic and therefor doesn't in itself
         trigger any rerenders. So to get it back into the React realm just put
-        the subscriber in a useEffect like so. Emitters can be triggered
-        anywhere.
+        the subscriber in a useEffect like so. Emitters can be trigger anywhere.
       </p>
       <Block limit='30rem'>
         <p>In React wrap the subscriber in a useEffect:</p>

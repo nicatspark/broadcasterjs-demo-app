@@ -10,7 +10,11 @@ export const PageCode = () => {
   return (
     <Page>
       <h1>The source code</h1>
-      <p className='center'>broadcaster.ts</p>
+      <p className='center'>
+        <a title='download' download href='/broadcaster.ts'>
+          broadcaster.ts
+        </a>
+      </p>
       <pre className='big line-numbers'>
         <code className='language-ts'>
           {`
@@ -29,7 +33,8 @@ export const PageCode = () => {
       let broadcastItemsCache: string[] = []
       
       const debug =
-        new URLSearchParams(window.location.search).get('debug') === 'BroadcasterJS'
+      new URLSearchParams(window.location.search).get('debug')?.toLowerCase() ===
+      'broadcasterjs'
       
       const eventBus = (): returnType => {
         const hubId = ' broadcast-node '
@@ -147,11 +152,13 @@ export const PageCode = () => {
     `}
         </code>
       </pre>
-      <p className='limited'>
-        Source code for this site here:{' '}
+      <p className='limited small'>
+        (Even if BroadcasterJS simple to use the source code for this site is
+        public with plenty of examples can be viewed here:{' '}
         <a href='https://github.com/nicatspark/broadcasterjs'>
           https://github.com/nicatspark/broadcasterjs
         </a>
+        )
       </p>
     </Page>
   )

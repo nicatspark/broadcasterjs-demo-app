@@ -21,6 +21,7 @@ body {
   padding: 0;
   padding-left: 3rem;
   margin: 0;
+  overscroll-behavior: none;
 }
 
 .App {
@@ -70,8 +71,11 @@ pre.big {
   height: 300px;
   overflow: scroll;
   box-shadow: inset 0 0 3px 3px rgba(0 0 0/ 0.2);
+  max-width: 800px;
+  margin-inline: auto;
 }
 
+.small,
 details {
   font-size: 0.8rem;
 }
