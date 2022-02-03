@@ -83,7 +83,10 @@ const eventBus = (): returnType => {
     const listenerExists = (type: string, listener: unknown) => {
       const id = createBroadcastId(type, listener)
       debugmode('broadcastItemsCache', broadcastItemsCache)
-      if (broadcastItemsCache.includes(type + id)) return true
+      if (broadcastItemsCache.includes(type + id)) {
+        debugmode('Prevented doublette subscriber.')
+        return true
+      }
       broadcastItemsCache.push(type + id)
       return false
     }
@@ -124,7 +127,7 @@ const eventBus = (): returnType => {
 
   function debugmode(type: string, obj?: unknown) {
     if (!debug) return
-    console.log(`Broadcast: ${type}`, obj ? obj : '--')
+    console.log(`%cBroadcast: ${type}`, 'color:#bada55', obj ? obj : '--')
   }
 }
 const broadcast = eventBus()

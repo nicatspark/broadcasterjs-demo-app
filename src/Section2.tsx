@@ -24,7 +24,7 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
   const start = useRef(Date.now())
   start.current = Date.now()
   const [sec, setSec] = useState(0)
-  // Highlight every render in UI.
+  // Highlights every render in UI.
   ;({
     do: function () {
       const a = document.querySelector('.receiver') as HTMLDivElement
@@ -32,7 +32,6 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
       a.classList.remove('rerendered')
       setTimeout(() => {
         a.classList.add('rerendered')
-        console.log('rerender', a)
         setTimeout(() => a.classList.remove('rerendered'), 500)
       })
     },
