@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { broadcast, ListenerProps } from './scripts/broadcaster'
+import { broadcast } from './scripts/broadcaster'
 import styled from 'styled-components'
 
 const Section = styled.div`
@@ -14,11 +14,6 @@ const Section = styled.div`
 interface ChildrenAndProps {
   children?: JSX.Element
 }
-
-type ActionType = [
-  type: string,
-  listener?: string | (({ detail }: { detail: number }) => void)
-]
 
 export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
   const start = useRef(Date.now())
@@ -43,11 +38,7 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
     broadcast.on([
       'example-flag',
       ({ detail }: { detail: number }) => {
-        console.log(
-          'asd',
-          `${seconds(detail)} sec since last render`,
-          start.current
-        )
+        console.log(`${seconds(detail)} sec since last render`, start.current)
         setSec(seconds(detail))
       },
     ])
