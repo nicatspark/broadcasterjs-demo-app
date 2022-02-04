@@ -27,7 +27,7 @@ export const PageDebug = () => {
             Activate a <mark>global</mark> debugmode that outputs all events to
             the console log.
             <details>
-              Add <mark>?debug=broadcaster</mark> to your url and open the
+              Add <mark>?debug=broadcasterjs</mark> to your url and open the
               devtools console.
             </details>
           </summary>

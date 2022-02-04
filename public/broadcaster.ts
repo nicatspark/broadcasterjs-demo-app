@@ -1,51 +1,91 @@
-type ListenerProps = <T extends unknown>([type, listener]: [
+export type ListenerProps = <T extends unknown>([type, listener, settings]: [
   type: string,
-  listener: T
-]) => void
+  listener?: T,
+  settings?: settingsType
+]) => string | void
 
-interface returnType {
+export interface returnType {
   on: ListenerProps
   once: ListenerProps
   off: ListenerProps
   emit: (type: string, detail?: unknown) => boolean
 }
 
+export interface settingsType {
+  debug: boolean
+  debugGlobal: boolean
+  allowDoublettesSubscribers: boolean
+}
+
 let broadcastItemsCache: string[] = []
 
-const debug =
+let globalDebug =
   new URLSearchParams(window.location.search).get('debug')?.toLowerCase() ===
   'broadcasterjs'
 
+const defaultSettings = {
+  debug: false,
+  debugGlobal: false,
+  allowDoublettesSubscribers: false,
+}
+
 const eventBus = (): returnType => {
   const hubId = ' broadcast-node '
-
-  const on = <T extends unknown>([type, listener]: [
+  const on = <T extends unknown>([type, listener, settings = defaultSettings]: [
     type: string,
-    listener: T
-  ]) => {
-    if (handleCache().listenerExists(type, listener)) return
+    listener?: T,
+    settings?: settingsType
+  ]): string => {
+    const options = setOptions(settings)
+    const { exists, id } = handleCache().listenerExists(type, listener, options)
+    if (exists && !options.allowDoublettesSubscribers) return id
+    if (options.debug)
+      debugmode({
+        string: `Setting listener for "${type}"`,
+        obj: listener,
+        force: true,
+      })
     const eventTarget = createOrGetCustomEventNode(hubId)
     eventTarget.addEventListener(
       'broadcast-' + type,
       listener as EventListenerOrEventListenerObject
     )
+    return id
   }
-  const once = <T extends unknown>([type, listener]: [
-    type: string,
-    listener: T
-  ]) => {
-    if (handleCache().listenerExists(type, listener)) return
+  const once = <T extends unknown>([
+    type,
+    listener,
+    settings = defaultSettings,
+  ]: [type: string, listener?: T, settings?: settingsType]) => {
+    const options = setOptions(settings)
+    const { exists, id } = handleCache().listenerExists(type, listener, options)
+    if (exists && !options.allowDoublettesSubscribers) return id
+    if (options.debug)
+      debugmode({
+        string: `Setting "once" listener "${type}"`,
+        obj: listener,
+        force: true,
+      })
     const eventTarget = createOrGetCustomEventNode(hubId)
     eventTarget.addEventListener(
       'broadcast-' + type,
       listener as EventListenerOrEventListenerObject,
       { once: true }
     )
+    return id
   }
-  const off = <T extends unknown>([type, listener]: [
-    type: string,
-    listener: T
-  ]) => {
+  const off = <T extends unknown>([
+    type,
+    listener,
+    settings = defaultSettings,
+  ]: [type: string, listener?: T, settings?: settingsType]) => {
+    const options = setOptions(settings)
+    if (options.debug)
+      debugmode({
+        string: `Removing listener "${type}"`,
+        obj: listener,
+        force: true,
+      })
     handleCache().remove(type, listener)
     const eventTarget = createOrGetCustomEventNode(hubId)
     eventTarget.removeEventListener(
@@ -53,8 +93,16 @@ const eventBus = (): returnType => {
       listener as EventListenerOrEventListenerObject
     )
   }
-  const emit = (type: string, detail?: unknown): boolean => {
-    debugmode(type, detail)
+  const emit = (
+    type: string,
+    detail?: unknown,
+    settings?: settingsType
+  ): boolean => {
+    debugmode({
+      string: `Emitted ${type}`,
+      obj: detail,
+      force: settings?.debug,
+    })
     const eventTarget = createOrGetCustomEventNode(hubId)
     return eventTarget.dispatchEvent(
       new CustomEvent('broadcast-' + type, { detail })
@@ -80,12 +128,26 @@ const eventBus = (): returnType => {
   // taking advantage of the es6 modules intrinsic singleton properties.
   // If already stored reject request and exit silently.
   function handleCache() {
-    const listenerExists = (type: string, listener: unknown) => {
+    const listenerExists = (
+      type: string,
+      listener: unknown,
+      settings: settingsType
+    ): { exists: boolean; id: string } => {
       const id = createBroadcastId(type, listener)
-      debugmode('broadcastItemsCache', broadcastItemsCache)
-      if (broadcastItemsCache.includes(type + id)) return true
+      debugmode({
+        string: 'broadcastItemsCache',
+        obj: broadcastItemsCache,
+        force: settings.debug,
+      })
+      if (broadcastItemsCache.includes(type + id)) {
+        debugmode({
+          string: 'Prevented doublette subscriber.',
+          force: settings.debug,
+        })
+        return { exists: true, id }
+      }
       broadcastItemsCache.push(type + id)
-      return false
+      return { exists: false, id }
     }
     const remove = (type: string, listener: unknown) => {
       const removeId = createBroadcastId(type, listener)
@@ -98,20 +160,27 @@ const eventBus = (): returnType => {
   function createBroadcastId(flag: string, details: unknown): string {
     let detailsStringified
     switch (typeof details) {
-      case 'object':
-      case 'boolean':
-      case 'string':
-        detailsStringified = JSON.stringify(details)
-        break
       case 'function':
         detailsStringified = helpers().serializeFn(details as () => void, {})
         break
       default:
-        throw new Error('Could not identify type of "details".')
+        try {
+          detailsStringified = JSON.stringify(details)
+        } catch (error) {
+          throw new Error(
+            `Could not "JSON.stringify" the broadcasterjs payload of "${typeof details}" type.`
+          )
+        }
     }
     return helpers()
       .hashCode(flag + detailsStringified)
       .toString()
+  }
+
+  function setOptions(settings: settingsType): settingsType {
+    const mergedOptions = { ...defaultSettings, ...settings }
+    if (mergedOptions.debugGlobal) globalDebug = true
+    return mergedOptions
   }
 
   function helpers() {
@@ -122,9 +191,17 @@ const eventBus = (): returnType => {
     return { serializeFn, hashCode }
   }
 
-  function debugmode(type: string, obj?: unknown) {
-    if (!debug) return
-    console.log(`Broadcast: ${type}`, obj ? obj : '--')
+  function debugmode({
+    string,
+    obj,
+    force,
+  }: {
+    string: string
+    obj?: unknown
+    force?: boolean
+  }) {
+    if (!globalDebug && !force) return
+    console.log(`%cBroadcast: ${string}`, 'color:#bada55', obj ? obj : '--')
   }
 }
 const broadcast = eventBus()
@@ -160,5 +237,13 @@ Click elements tab i chrome devtools,
 click event-listeners tab in second pane. 
 Active listeners begin with 'broadcast-' + flag name.
 
-To debug: add ?debug=BroadcasterJS
+To debug: add ?debug=BroadcasterJS in url and open devtools console.
+
+Advanced: on,once,off takes an optional third value and emit takes 
+an optional third argument in the form of a settings object.
+{
+  debug: boolean
+  debugGlobal: boolean
+  allowDoublettesSubscribers: boolean
+}
 */
