@@ -34,19 +34,19 @@ export const PageDebug = () => {
         </li>
         <li>
           <summary className='limited'>
-            Activate debugmode <mark>localy</mark> that outputs all events to
-            the console log.
+            Activate debugmode <mark>localy</mark> that outputs a specific
+            subscription/emit to the console log.
             <details>See the example below.</details>
           </summary>
         </li>
       </ul>
       <Block limit='30rem'>
-        <p>Subscribe with debug localy: (comming soon)</p>
+        <p>Subscribe with debug localy:</p>
         <pre>
           <code style={{ lineHeight: '1.5rem' }}>
             {`broadcast.on(['example-flag', () => {
     setMyUseState(true)
-  }], 'debug')`}
+  }], {debug: true})`}
           </code>
         </pre>
       </Block>
