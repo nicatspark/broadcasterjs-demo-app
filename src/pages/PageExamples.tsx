@@ -23,8 +23,9 @@ export const PageExamples = () => {
     <Page>
       <h1>Live Example</h1>
       <p className='limited'>
-        A click invokes a broadcast that is received in the sibling component
-        where it sets a local state in React that triggers a re-render.
+        A click invokes a broadcast (outside of React) that is received in the
+        sibling component where it sets a local state back in React that then
+        triggers a re-render.
       </p>
       <div className='wrapper'>
         <Section1 />

@@ -26,7 +26,7 @@ export const PageBenefits = () => {
         <ul>
           <li>Framework agnostic.</li>
           <li>
-            Works globaly in a micro frontend environment.<sup>*</sup>
+            Works globally in a micro frontend environment.<sup>*</sup>
           </li>
           <li>Scales well.</li>
           <li>Native. (Ages well)</li>
@@ -34,14 +34,21 @@ export const PageBenefits = () => {
         </ul>
         <p>
           <sup>*</sup>
-          <i>depending in mfe setup</i>
+          <i>as long as the mfe setup allows JS events to bubble through.</i>
         </p>
         <h2>Prerequisites and requirements before creation of BroadcasterJS</h2>
         <ul>
           <li>Easy to use.</li>
-          <li>No initialization.</li>
-          <li>Plug and play.</li>
-          <li>Inspectable and debugable.</li>
+          <li>
+            No initialization. Do not need live in a special place in your code.
+          </li>
+          <li title='Create a subscriber and a emitter and your done.'>
+            Plug and play.
+          </li>
+          <li title='You are in control.'>Inspectable and debugable.</li>
+          <li title='Can easily be replaced by other (worse) solutions if needed.'>
+            Unintrusive as a dependency.
+          </li>
         </ul>
       </div>
     </Page>
