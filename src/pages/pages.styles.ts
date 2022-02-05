@@ -18,6 +18,7 @@ export const Page = styled.div`
   padding: 0 1rem;
   max-height: calc(100vh - var(--header-height) - var(--footer-height));
   overflow: scroll;
+  padding-bottom: 10rem;
   h1 {
     text-align: center;
     margin-top: max(15vh - 50px, 4rem);

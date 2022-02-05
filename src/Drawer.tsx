@@ -66,7 +66,7 @@ export const Drawer = () => {
   const drawer = useRef<HTMLElement | null>(null)
 
   const handleDrawerClick = (e?: React.SyntheticEvent) => {
-    broadcast.emit('menu-toggled')
+    broadcast.emit('MENU-TOGGLED')
     setDrawerOpen((toggel) => !toggel)
     setShowPieTimer(false)
     if (!e) return
@@ -90,14 +90,13 @@ export const Drawer = () => {
   }
 
   const gotoPage = async (pagenr: number) => {
-    broadcast.emit('set-page', pagenr)
+    broadcast.emit('SET-PAGE', pagenr)
     setPage(pagenr)
     await sleep(300)
     handleDrawerClick()
   }
 
   const handleOnMouseOver = () => {
-    console.log(autoCloseId)
     autoCloseId.map((id) => clearTimeout(id))
     setShowPieTimer(false)
   }
@@ -105,9 +104,9 @@ export const Drawer = () => {
     autoCloseAfterDelay(1000)
   }
 
-  // resets to page on localy
+  // resets to page on locally
   useEffect(() => {
-    broadcast.emit('set-page', 1)
+    broadcast.emit('SET-PAGE', 1)
   }, [])
 
   return (

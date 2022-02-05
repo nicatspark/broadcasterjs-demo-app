@@ -213,24 +213,24 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 
 START SUBSCRIPTION IN REACT
 useEffect(() => {
-  broadcast.on(['broadcast-name', flagReceivedFunction])
+  broadcast.on(['BROADCAST-ID', flagReceivedFunction])
 }, [flagReceivedFunction])
 
 START SUBSCRIPTION VANILLA JS
-broacaster.on(['broadcast-name', ({ detail }) => {
+broacaster.on(['BROADCAST-ID', ({ detail }) => {
     document.body.append(detail + ' ');
 }]);
-broacaster.once(['broadcast-name', ({ detail }) => {
+broacaster.once(['BROADCAST-ID', ({ detail }) => {
     document.body.append(detail + ' ');
 }]);
 
 END SUBSCRIPTION
-broacaster.off(['broadcast-name', ({ detail }) => {
+broacaster.off(['BROADCAST-ID', ({ detail }) => {
     document.body.append(detail + ' ');
 }]);
 
 PUBLISH IN REACT & VANILLLA JS
-broadcast.emit('broadcast-name', 'Hello world')
+broadcast.emit('BROADCAST-ID', 'Hello world')
 
 TO INSPECT VISUALLY
 Click elements tab i chrome devtools, 

@@ -12,11 +12,11 @@ export const PageGetStarted = () => {
         <p>Import broadcaster.ts</p>
         <code>import broadcast from "./broadcast";</code>
         <p>Subscribe:</p>
-        <code>{`broadcast.on(['example-flag', () => setMyUseState(true)])`}</code>
+        <code>{`broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])`}</code>
         <p>Publish:</p>
-        <code>{`broadcast.emit('example-flag', {detail: someVarToEmit})`}</code>
+        <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: someVarToEmit})`}</code>
         <p>Publish with data:</p>
-        <code>{`broadcast.emit('example-flag', {detail: myData})`}</code>
+        <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: myData})`}</code>
       </Block>
       <p className='limited'>
         BroadcasterJS is a pub/sub event transmitter written in typescript. A
@@ -35,10 +35,18 @@ export const PageGetStarted = () => {
         {/* // prettier-ignore */}
         <pre style={{ lineHeight: '1.5rem' }}>
           <code>{`useEffect(() => {
-    broadcast.on(['example-flag', () => setMyUseState(true)])
+    broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])
   }, [])`}</code>
         </pre>
       </Block>
+      <p className='limited'>
+        A identical subscriber (flag + callback combination) can only be set
+        once so no worries about rerenders.
+      </p>
+      <p className='limited'>
+        Setting the flag in upper case is just a best practice which makes for
+        easier code overview.
+      </p>
     </Page>
   )
 }

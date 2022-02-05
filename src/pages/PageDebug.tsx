@@ -44,7 +44,7 @@ export const PageDebug = () => {
         <p>Subscribe with debug locally:</p>
         <pre>
           <code style={{ lineHeight: '1.5rem' }}>
-            {`broadcast.on(['example-flag', () => {
+            {`broadcast.on(['EXAMPLE-FLAG', () => {
     setMyUseState(true)
   }], {debug: true})`}
           </code>

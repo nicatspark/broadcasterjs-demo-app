@@ -36,7 +36,7 @@ export const Section2 = ({ children }: ChildrenAndProps): JSX.Element => {
     const seconds = (detail: number) =>
       Math.floor((detail - start.current) / 1000)
     broadcast.on([
-      'example-flag',
+      'EXAMPLE-FLAG',
       ({ detail }: { detail: number }) => {
         console.log(`${seconds(detail)} sec since last render`, start.current)
         setSec(seconds(detail))

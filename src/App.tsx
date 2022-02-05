@@ -16,7 +16,7 @@ export default function App() {
 
   useEffect(() => {
     broadcast.on([
-      'set-page',
+      'SET-PAGE',
       ({ detail: page }: { detail: number }) => {
         setCurrentPage(page)
       },

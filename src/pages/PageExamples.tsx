@@ -10,13 +10,13 @@ export const PageExamples = () => {
 
   useEffect(() => {
     broadcast.on([
-      'set-page',
+      'SET-PAGE',
       ({ detail: page }: { detail: number }) => {
         setCurrentPage(page)
         if (page !== 3) setShowAssertion(false)
       },
     ])
-    broadcast.on(['example-flag', () => setShowAssertion(true)])
+    broadcast.on(['EXAMPLE-FLAG', () => setShowAssertion(true)])
   }, [])
 
   return (

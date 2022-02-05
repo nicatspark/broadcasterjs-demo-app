@@ -49,7 +49,7 @@ export const Pageflipper = () => {
 
   useEffect(() => {
     broadcast.on([
-      'set-page',
+      'SET-PAGE',
       ({ detail: page }: { detail: number }) => {
         setDisableLeft(page === 1)
         setDisableRight(page === maxNumberOfPage)
@@ -66,7 +66,7 @@ export const Pageflipper = () => {
       setTimeout(() => leftTri.current?.classList.remove('shake'), 4.72 * 1000)
       return
     }
-    broadcast.emit('set-page', Math.max(currentPage - 1, 1))
+    broadcast.emit('SET-PAGE', Math.max(currentPage - 1, 1))
   }
   const handleRightClick = () => {
     const gotoPage = Math.min(currentPage + 1, maxNumberOfPage)
@@ -75,7 +75,7 @@ export const Pageflipper = () => {
       setTimeout(() => leftTri.current?.classList.remove('shake'), 4.72 * 1000)
       return
     }
-    broadcast.emit('set-page', gotoPage)
+    broadcast.emit('SET-PAGE', gotoPage)
   }
 
   return (
