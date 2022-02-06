@@ -1,4 +1,4 @@
-import { Block, Page } from './pages.styles'
+import { Block, Page, Separator } from './pages.styles'
 
 export const PageDebug = () => {
   return (
@@ -9,55 +9,49 @@ export const PageDebug = () => {
         debug.
       </p>
       <p className='limited'>You can:</p>
-      <ul className='limited'>
-        <li>
-          <summary className='limited'>
-            <mark>Inspect</mark> what listeners are active.
-            <details>
-              Select elements tab in devtools. Find the &lt;!-- broadcast-node
-              --&gt;. Select the node in dev-tools/elements tab and open
-              event-listeners tab in second pane in dev-tools and all active
-              listeners will be listed. Those starting with 'broadcast-' are
-              yours.
-            </details>
-          </summary>
-        </li>
-        <li>
-          <summary className='limited'>
-            Activate a <mark>global</mark> debugmode that outputs all emit
-            events as well as subscriptions when they occur to the console log.
-            <details>
-              Add <mark>?debug=broadcasterjs</mark> to your url and open the
-              devtools console.
-            </details>
-          </summary>
-        </li>
-        <li>
-          <summary className='limited'>
-            Activate debugmode <mark>locally</mark> that outputs a specific
-            subscription/emit event to the console log.
-            <details>See the example below.</details>
-          </summary>
-        </li>
-      </ul>
-      <Block limit='30rem'>
+
+      <details className='limited'>
+        <summary>
+          <mark>Inspect</mark> what listeners are active.
+        </summary>
+        Select elements tab in devtools. Find the &lt;!-- broadcast-node --&gt;.
+        Select the node in dev-tools/elements tab and open event-listeners tab
+        in second pane in dev-tools and all active listeners will be listed.
+        Those starting with 'broadcast-' are yours.
+      </details>
+      <details className='limited'>
+        <summary>
+          Activate a <mark>global</mark> debugmode that outputs all emit events
+          as well as subscriptions when they occur to the console log.
+        </summary>
+        Add <mark>?debug=broadcasterjs</mark> to your url and open the devtools
+        console.
+      </details>
+      <details className='limited'>
+        <summary>
+          Activate debugmode <mark>locally</mark> that outputs a specific
+          subscription/emit event to the console log.
+        </summary>
         <p>Subscribe with debug locally:</p>
-        <pre>
-          <code style={{ lineHeight: '1.5rem' }}>
-            {`broadcast.on(['EXAMPLE-FLAG', () => {
+        <Block limit='30rem' my='0rem'>
+          <pre>
+            <code style={{ lineHeight: '1.5rem' }}>
+              {`broadcast.on(['EXAMPLE-FLAG', () => {
     setMyUseState(true)
   }], {debug: true})`}
-          </code>
-        </pre>
-      </Block>
+            </code>
+          </pre>
+        </Block>
+      </details>
+      <Separator />
       <h2 className='limited'>Advanced use</h2>
       <h3 className='limited'>Circumvent the doublette guard</h3>
       <p className='limited'>
-        BroadcasterJS was optimised to run in a SPA like situation where it can
-        be a tall task to keep track of renders where subscription are set.
-        Since custom events can be set multiple times BroadcasterJS by default
-        does not allow more than one identical flag + function combination to be
-        set.
+        BroadcasterJS is optimised for a SPA like situation where it can be a
+        tall task to keep track of renders where subscription are set. Since the
+        same custom event easily can be set multiple times BroadcasterJS by
+        default does not allow more than one identical flag + callback
+        combination to be set.
       </p>
       <p className='limited'>
         It is easy to circumevent this by sligthly changing the function to
@@ -65,21 +59,21 @@ export const PageDebug = () => {
         is unique. You can also disable the guard by including a settings object
         as a third value in the subscriber array. The subscriber argument array
         would look something like{' '}
-        {`['MY-EXAMPLE-FLAG', myFunctionToRunOnEvent, {allowDoublettesSubscribers:true}]`}
+        <mark>{`['MY-EXAMPLE-FLAG', myCallbackFnToRunOnEvent, {allowDoublettesSubscribers:true}]`}</mark>
       </p>
       <p className='limited'>
         The broadcast subscriber function also returns an unique id for the flag
-        + function combination if you want to handle the doublette guard
+        + callback combination if you want to handle the doublette guard
         externally for some reason.
       </p>
 
       <h3 className='limited'>Invoke the global debug</h3>
       <p className='limited'>
-        Aside from invoking it through the url with url params you can invoke it
-        throught the settings object. Debug output will then start from when the
-        settings object is set of course so the url method is preferable.
-        Example:{' '}
-        {`['MY-EXAMPLE-FLAG', myFunctionToRunOnEvent, {debugGlobal:true}]`}
+        Aside from invoking the debug mode through the url with url params you
+        can invoke it throught the settings object. Debug output will then start
+        from when the settings object is set of course so the url method is
+        preferable. Settings object example:{' '}
+        <mark>{`['MY-EXAMPLE-FLAG', myCallbackFnToRunOnEvent, {debugGlobal:true}]`}</mark>
       </p>
     </Page>
   )

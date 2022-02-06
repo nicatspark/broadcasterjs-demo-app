@@ -79,6 +79,13 @@ pre.big {
 details {
   font-size: 0.8rem;
 }
+summary {
+  color: #000;
+}
+details,
+details > mark {
+  color: #555;
+}
 
 .center {
   text-align: center;

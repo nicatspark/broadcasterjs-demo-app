@@ -32,7 +32,7 @@ export const Page = styled.div`
 
 export const Block = styled.div`
   max-width: ${({ limit }: { limit: number }) => limit};
-  margin: 4rem auto;
+  margin: ${({ my }: { my: number }) => my || '4rem'} auto;
   p {
     margin-bottom: 0;
     font-size: 0.8rem;
@@ -41,5 +41,12 @@ export const Block = styled.div`
     background-color: yellow;
     border-radius: 3px;
     padding: 0.3rem 1rem;
+    line-height: 1.5rem;
   }
+`
+
+export const Separator = styled.div`
+  height: 0;
+  border-bottom: 1px dashed #555555;
+  margin: 6rem auto 2rem auto;
 `
