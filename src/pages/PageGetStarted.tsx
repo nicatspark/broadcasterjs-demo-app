@@ -9,13 +9,15 @@ export const PageGetStarted = () => {
         pub/sub event bus today!
       </p>
       <Block limit='30rem'>
+        <p>Install broadcasterjs (or copy code)</p>
+        <code>npm i @foundit/broadcasterjs</code>
         <p>Import broadcaster.ts</p>
         <code>import broadcast from "./broadcast";</code>
         <p>Subscribe:</p>
         <code>{`broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])`}</code>
         <p>Publish:</p>
         <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: someVarToEmit})`}</code>
-        <p>Publish with data:</p>
+        <p>Publish with some payload data:</p>
         <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: myData})`}</code>
       </Block>
       <p className='limited'>

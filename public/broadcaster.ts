@@ -139,7 +139,7 @@ const eventBus = (): returnType => {
         obj: broadcastItemsCache,
         force: settings.debug,
       })
-      if (broadcastItemsCache.includes(type + id)) {
+      if (broadcastItemsCache.indexOf(type + id) !== -1) {
         debugmode({
           string: 'Prevented doublette subscriber.',
           force: settings.debug,
@@ -209,41 +209,41 @@ export { broadcast }
 
 // Usage
 /*
-No need to initialize separately. Import the 'broadcast' factory function and use to your hearts content.
-
-START SUBSCRIPTION IN REACT
-useEffect(() => {
-  broadcast.on(['BROADCAST-ID', flagReceivedFunction])
-}, [flagReceivedFunction])
-
-START SUBSCRIPTION VANILLA JS
-broacaster.on(['BROADCAST-ID', ({ detail }) => {
-    document.body.append(detail + ' ');
-}]);
-broacaster.once(['BROADCAST-ID', ({ detail }) => {
-    document.body.append(detail + ' ');
-}]);
-
-END SUBSCRIPTION
-broacaster.off(['BROADCAST-ID', ({ detail }) => {
-    document.body.append(detail + ' ');
-}]);
-
-PUBLISH IN REACT & VANILLLA JS
-broadcast.emit('BROADCAST-ID', 'Hello world')
-
-TO INSPECT VISUALLY
-Click elements tab i chrome devtools, 
-click event-listeners tab in second pane. 
-Active listeners begin with 'broadcast-' + flag name.
-
-To debug: add ?debug=BroadcasterJS in url and open devtools console.
-
-Advanced: on,once,off takes an optional third value and emit takes 
-an optional third argument in the form of a settings object.
-{
-  debug: boolean
-  debugGlobal: boolean
-  allowDoublettesSubscribers: boolean
-}
-*/
+  No need to initialize separately. Import the 'broadcast' factory function and use to your hearts content.
+  
+  START SUBSCRIPTION IN REACT
+  useEffect(() => {
+    broadcast.on(['BROADCAST-ID', flagReceivedFunction])
+  }, [flagReceivedFunction])
+  
+  START SUBSCRIPTION VANILLA JS
+  broacast.on(['BROADCAST-ID', ({ detail }) => {
+      document.body.append(detail + ' ');
+  }]);
+  broacast.once(['BROADCAST-ID', ({ detail }) => {
+      document.body.append(detail + ' ');
+  }]);
+  
+  END SUBSCRIPTION
+  broacast.off(['BROADCAST-ID', ({ detail }) => {
+      document.body.append(detail + ' ');
+  }]);
+  
+  PUBLISH IN REACT & VANILLLA JS
+  broadcast.emit('BROADCAST-ID', 'Hello world')
+  
+  TO INSPECT VISUALLY
+  Click elements tab i chrome devtools, 
+  click event-listeners tab in second pane. 
+  Active listeners begin with 'broadcast-' + flag name.
+  
+  To debug: add ?debug=BroadcasterJS in url and open devtools console.
+  
+  Advanced: on,once,off takes an optional third value and emit takes 
+  an optional third argument in the form of a settings object.
+  {
+    debug: boolean
+    debugGlobal: boolean
+    allowDoublettesSubscribers: boolean
+  }
+  */

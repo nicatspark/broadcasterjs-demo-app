@@ -2,6 +2,16 @@ import { Page } from './pages.styles'
 import Prism from 'prismjs'
 import { useEffect } from 'react'
 
+const getCode = async (url: string, e: React.SyntheticEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+  const fetchcode = async (url: Request) => await (await fetch(url)).text()
+  const el = document.querySelector('.code') as HTMLElement
+  var myRequest = new Request(url)
+  const code = await fetchcode(myRequest)
+  if (el) el.innerText = code
+}
+
 export const PageCode = () => {
   useEffect(() => {
     setTimeout(() => Prism.highlightAll(), 0)
@@ -11,12 +21,26 @@ export const PageCode = () => {
     <Page>
       <h1>The source code</h1>
       <p className='center'>
-        <a title='download' download href='/broadcaster.ts'>
+        <a
+          title='download'
+          download
+          onClick={(e) => getCode('/broadcaster.js', e)}
+          href='/broadcaster.js'
+        >
+          broadcaster.js
+        </a>{' '}
+        |{' '}
+        <a
+          title='download'
+          download
+          onClick={(e) => getCode('/broadcaster.ts', e)}
+          href='/broadcaster.ts'
+        >
           broadcaster.ts
         </a>
       </p>
       <pre className='big line-numbers'>
-        <code className='language-ts'>
+        <code className='language-ts code'>
           {`
       export type ListenerProps = <T extends unknown>([type, listener, settings]: [
         type: string,
