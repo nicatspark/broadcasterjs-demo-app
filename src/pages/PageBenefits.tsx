@@ -49,7 +49,7 @@ export const PageBenefits = () => {
             </Ttip>
           </li>
           <li>
-            <Ttip data-tool-tip="I'd put a debouncer on a scroll event anyway.">
+            <Ttip data-tool-tip="I'd put a debouncer on a scroll event anyway. Just sayin'.">
               Native. (Performant)
             </Ttip>
           </li>
