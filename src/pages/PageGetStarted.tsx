@@ -5,7 +5,7 @@ export const PageGetStarted = () => {
     <Page>
       <h1>Simplifiy your life today</h1>
       <p className='limited'>
-        It is never to late to start simplifying your life. Start using the
+        It is never to late to start simplifying your dev life. Start using the
         pub/sub event bus today!
       </p>
       <Block limit='30rem'>

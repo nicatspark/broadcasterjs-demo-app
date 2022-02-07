@@ -1,4 +1,4 @@
-import { Page } from './pages.styles'
+import { Page, Ttip } from './pages.styles'
 
 export const PageBenefits = () => {
   return (
@@ -9,8 +9,16 @@ export const PageBenefits = () => {
           Benefits to useing a <mark>pub/sub pattern</mark> in general
         </h2>
         <ul>
-          <li>Creating decoupled components makes for easier refactoring.</li>
-          <li>No need for unnecessary prop drilling.</li>
+          <li>
+            <Ttip data-tool-tip='And that makes for happier developers ❤️'>
+              Creating decoupled components makes for easier refactoring.
+            </Ttip>
+          </li>
+          <li>
+            <Ttip data-tool-tip={`Let's put an end to prop inception.`}>
+              No need for unnecessary prop drilling.
+            </Ttip>
+          </li>
           <li>
             Multiple events emitters can trigger a centralized functions placed
             in logical places instead of practical.
@@ -24,30 +32,51 @@ export const PageBenefits = () => {
           BroadcasterJS)
         </h2>
         <ul>
-          <li>Framework agnostic.</li>
           <li>
-            Works globally in a micro frontend environment.<sup>*</sup>
+            <Ttip data-tool-tip='You heard right, or use no framework at all ¯\_(ツ)_/¯'>
+              Framework agnostic.
+            </Ttip>
+          </li>
+          <li>
+            <Ttip data-tool-tip='As long as the mfe setup allows JS events to bubble through.'>
+              Works globally in a micro frontend environment.
+            </Ttip>
           </li>
           <li>Scales well.</li>
-          <li>Native. (Ages well)</li>
-          <li>Native. (Performant)</li>
+          <li>
+            <Ttip data-tool-tip="Yeah, it'll outlive React.">
+              Native. (Ages well.)
+            </Ttip>
+          </li>
+          <li>
+            <Ttip data-tool-tip="I'd put a debouncer on a scroll event anyway.">
+              Native. (Performant)
+            </Ttip>
+          </li>
         </ul>
-        <p>
-          <sup>*</sup>
-          <i>as long as the mfe setup allows JS events to bubble through.</i>
-        </p>
+        <p></p>
         <h2>Prerequisites and requirements before creation of BroadcasterJS</h2>
         <ul>
           <li>Easy to use.</li>
           <li>
-            No initialization. Do not need live in a special place in your code.
+            <Ttip data-tool-tip='That needs to live in a special place in your code.'>
+              No initialization.
+            </Ttip>
           </li>
-          <li title='Create a subscriber and a emitter and your done.'>
-            Plug and play.
+          <li>
+            <Ttip data-tool-tip='Create a subscriber and a emitter and you are golden.'>
+              Plug and play.
+            </Ttip>
           </li>
-          <li title='You are in control.'>Inspectable and debugable.</li>
-          <li title='Can easily be replaced by other (worse) solutions if needed.'>
-            Unintrusive as a dependency.
+          <li>
+            <Ttip data-tool-tip='You are in control.'>
+              Inspectable and debugable.
+            </Ttip>
+          </li>
+          <li>
+            <Ttip data-tool-tip="Can be replaced by (worse) solutions if it should come to that. 'it's not you it's me' 😭">
+              Unintrusive as a dependency.
+            </Ttip>
           </li>
         </ul>
       </div>

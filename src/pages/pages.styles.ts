@@ -50,3 +50,51 @@ export const Separator = styled.div`
   border-bottom: 1px dashed #555555;
   margin: 6rem auto 2rem auto;
 `
+
+export const Ttip = styled.span`
+  position: relative;
+  &[data-tool-tip] {
+    &::after {
+      content: attr(data-tool-tip);
+      display: block;
+      position: absolute;
+      background-color: #ccc;
+      border-radius: 5px;
+      padding: 1em 3em;
+      color: #444;
+      font-size: 0.8em;
+      bottom: 0;
+      left: 0;
+      white-space: wrap;
+      transform: scale(0);
+      transition: transform ease-out 150ms, bottom ease-out 150ms;
+      max-width: 30rem;
+      width: max-content;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 3rem;
+      transform: translateY(-100%);
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border-style: solid;
+      border-width: 5px 5px 0 5px;
+      border-color: #ccc transparent transparent transparent;
+      transition: bottom 150ms ease-out, opacity 150ms ease-out;
+      transition-delay: 0;
+    }
+    &:hover::after {
+      bottom: 100%;
+      transform: scale(1);
+    }
+    &:hover::before {
+      bottom: 100%;
+      opacity: 1;
+      transform: scale(1) translateY(100%);
+      transition-delay: 150ms;
+    }
+  }
+`
