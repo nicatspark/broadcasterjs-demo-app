@@ -1,8 +1,14 @@
-export type ListenerProps = <T extends unknown>([type, listener, settings]: [
+export type listenerProp<T extends unknown> = [
   type: string,
   listener?: T,
   settings?: SettingsType
-]) => string | void
+]
+
+export type ListenerProps = <T extends unknown>([
+  type,
+  listener,
+  settings,
+]: listenerProp<T>) => void
 
 export interface ReturnType {
   on: ListenerProps
@@ -35,11 +41,11 @@ const defaultSettings = {
 
 const eventBus = (): ReturnType => {
   const hubId = ' broadcast-node '
-  const on = <T extends unknown>([type, listener, settings = defaultSettings]: [
-    type: string,
-    listener?: T,
-    settings?: SettingsType
-  ]): string => {
+  const on = <T extends unknown>([
+    type,
+    listener,
+    settings = defaultSettings,
+  ]: listenerProp<T>): string => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
     if (exists && !options.allowDoublettesSubscribers) {
@@ -70,7 +76,7 @@ const eventBus = (): ReturnType => {
     type,
     listener,
     settings = defaultSettings,
-  ]: [type: string, listener?: T, settings?: SettingsType]) => {
+  ]: listenerProp<T>) => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
     if (exists && !options.allowDoublettesSubscribers) return id
@@ -92,7 +98,7 @@ const eventBus = (): ReturnType => {
     type,
     listener,
     settings = defaultSettings,
-  ]: [type: string, listener?: T, settings?: SettingsType]) => {
+  ]: listenerProp<T>) => {
     const options = setOptions(settings)
     if (options.debug)
       debugmode({
