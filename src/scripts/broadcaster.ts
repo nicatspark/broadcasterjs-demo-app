@@ -1,20 +1,22 @@
 export type ListenerProps = <T extends unknown>([type, listener, settings]: [
   type: string,
   listener?: T,
-  settings?: settingsType
+  settings?: SettingsType
 ]) => string | void
 
-export interface returnType {
+export interface ReturnType {
   on: ListenerProps
   once: ListenerProps
   off: ListenerProps
   emit: (type: string, detail?: unknown) => boolean
 }
 
-export interface settingsType {
-  debug: boolean
-  debugGlobal: boolean
-  allowDoublettesSubscribers: boolean
+export interface SettingsType {
+  debug?: boolean
+  debugGlobal?: boolean
+  allowDoublettesSubscribers?: boolean
+  useLatestSubscriberScope?: boolean
+  suppresDebug?: boolean
 }
 
 let broadcastItemsCache: string[] = []
@@ -27,21 +29,33 @@ const defaultSettings = {
   debug: false,
   debugGlobal: false,
   allowDoublettesSubscribers: false,
+  useLatestSubscriberScope: true,
+  suppresDebug: false,
 }
 
-const eventBus = (): returnType => {
+const eventBus = (): ReturnType => {
   const hubId = ' broadcast-node '
   const on = <T extends unknown>([type, listener, settings = defaultSettings]: [
     type: string,
     listener?: T,
-    settings?: settingsType
+    settings?: SettingsType
   ]): string => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
-    if (exists && !options.allowDoublettesSubscribers) return id
+    if (exists && !options.allowDoublettesSubscribers) {
+      if (!options.useLatestSubscriberScope) return id
+      // Remove previous listener and set new to update scope.
+      off([type, listener, { suppresDebug: true }])
+      debugmode({
+        string: `Subscriber ${type} existed. Will update scope.`,
+        obj: broadcastItemsCache,
+      })
+    }
     if (options.debug)
       debugmode({
-        string: `Setting listener for "${type}"`,
+        string: `${
+          exists ? 'Updating listener scope' : 'Setting new listener'
+        } for "${type}"`,
         obj: listener,
         force: true,
       })
@@ -56,7 +70,7 @@ const eventBus = (): returnType => {
     type,
     listener,
     settings = defaultSettings,
-  ]: [type: string, listener?: T, settings?: settingsType]) => {
+  ]: [type: string, listener?: T, settings?: SettingsType]) => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
     if (exists && !options.allowDoublettesSubscribers) return id
@@ -78,13 +92,14 @@ const eventBus = (): returnType => {
     type,
     listener,
     settings = defaultSettings,
-  ]: [type: string, listener?: T, settings?: settingsType]) => {
+  ]: [type: string, listener?: T, settings?: SettingsType]) => {
     const options = setOptions(settings)
     if (options.debug)
       debugmode({
         string: `Removing listener "${type}"`,
         obj: listener,
         force: true,
+        settings,
       })
     handleCache().remove(type, listener)
     const eventTarget = createOrGetCustomEventNode(hubId)
@@ -96,7 +111,7 @@ const eventBus = (): returnType => {
   const emit = (
     type: string,
     detail?: unknown,
-    settings?: settingsType
+    settings?: SettingsType
   ): boolean => {
     debugmode({
       string: `Emitted ${type}`,
@@ -131,7 +146,7 @@ const eventBus = (): returnType => {
     const listenerExists = (
       type: string,
       listener: unknown,
-      settings: settingsType
+      settings: SettingsType
     ): { exists: boolean; id: string } => {
       const id = createBroadcastId(type, listener)
       debugmode({
@@ -141,7 +156,7 @@ const eventBus = (): returnType => {
       })
       if (broadcastItemsCache.indexOf(type + id) !== -1) {
         debugmode({
-          string: 'Prevented doublette subscriber.',
+          string: 'Found a previous instans of subscriber.',
           force: settings.debug,
         })
         return { exists: true, id }
@@ -150,7 +165,14 @@ const eventBus = (): returnType => {
       return { exists: false, id }
     }
     const remove = (type: string, listener: unknown) => {
-      const removeId = createBroadcastId(type, listener)
+      const removeId = type + createBroadcastId(type, listener)
+      debugmode({
+        string: `Remove listener: ${removeId}`,
+        obj:
+          broadcastItemsCache.indexOf(removeId) !== -1
+            ? 'Existed'
+            : `Didn't exist`,
+      })
       broadcastItemsCache = broadcastItemsCache.filter((id) => id !== removeId)
     }
     return { listenerExists, remove }
@@ -177,7 +199,7 @@ const eventBus = (): returnType => {
       .toString()
   }
 
-  function setOptions(settings: settingsType): settingsType {
+  function setOptions(settings: SettingsType): SettingsType {
     const mergedOptions = { ...defaultSettings, ...settings }
     if (mergedOptions.debugGlobal) globalDebug = true
     return mergedOptions
@@ -195,12 +217,14 @@ const eventBus = (): returnType => {
     string,
     obj,
     force,
+    settings,
   }: {
     string: string
     obj?: unknown
     force?: boolean
+    settings?: SettingsType
   }) {
-    if (!globalDebug && !force) return
+    if ((!globalDebug && !force) || settings?.suppresDebug) return
     console.log(`%cBroadcast: ${string}`, 'color:#bada55', obj ? obj : '--')
   }
 }
@@ -245,5 +269,7 @@ export { broadcast }
     debug: boolean
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
+    useLatestSubscriberScope: true,
+    suppresDebug: false,
   }
   */
