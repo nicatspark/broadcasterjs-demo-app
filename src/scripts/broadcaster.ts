@@ -22,7 +22,7 @@ export interface SettingsType {
   debugGlobal?: boolean
   allowDoublettesSubscribers?: boolean
   useLatestSubscriberScope?: boolean
-  suppresDebug?: boolean
+  suppressDebug?: boolean
 }
 
 let broadcastItemsCache: string[] = []
@@ -36,7 +36,7 @@ const defaultSettings = {
   debugGlobal: false,
   allowDoublettesSubscribers: false,
   useLatestSubscriberScope: true,
-  suppresDebug: false,
+  suppressDebug: false,
 }
 
 const eventBus = (): ReturnType => {
@@ -51,7 +51,7 @@ const eventBus = (): ReturnType => {
     if (exists && !options.allowDoublettesSubscribers) {
       if (!options.useLatestSubscriberScope) return id
       // Remove previous listener and set new to update scope.
-      off([type, listener, { suppresDebug: true }])
+      off([type, listener, { suppressDebug: true }])
       debugmode({
         string: `Subscriber ${type} existed. Will update scope.`,
         obj: broadcastItemsCache,
@@ -230,7 +230,7 @@ const eventBus = (): ReturnType => {
     force?: boolean
     settings?: SettingsType
   }) {
-    if ((!globalDebug && !force) || settings?.suppresDebug) return
+    if ((!globalDebug && !force) || settings?.suppressDebug) return
     const style =
       'color:#bada55;background:#666;padding:0.3rem 0.5rem;border-radius:3px'
     console.log(`%c${string}`, style, obj ? obj : '--')
@@ -278,6 +278,6 @@ export { broadcast }
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
     useLatestSubscriberScope: true,
-    suppresDebug: false,
+    suppressDebug: false,
   }
   */
