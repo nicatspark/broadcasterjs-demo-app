@@ -38,12 +38,15 @@ export const PageGetStarted = () => {
         <pre style={{ lineHeight: '1.5rem' }}>
           <code>{`useEffect(() => {
     broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])
+    return () => broadcast.off(['EXAMPLE-FLAG', () => setMyUseState(true)])
   }, [])`}</code>
         </pre>
       </Block>
       <p className='limited'>
-        A identical subscriber (flag + callback combination) can only be set
-        once so no worries about rerenders.
+        The clean-up return function is optional, BroadcasterJS is managing this
+        anyway but React migth warn about memory leaks never the less. A
+        identical subscriber (flag + callback combination) can only be set once
+        so no worries about rerenders.
       </p>
       <p className='limited'>
         Setting the flag in upper case is just a best practice which makes for

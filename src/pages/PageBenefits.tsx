@@ -78,6 +78,7 @@ export const PageBenefits = () => {
               Unintrusive as a dependency.
             </Ttip>
           </li>
+          <li>No own dependecies.</li>
         </ul>
       </div>
     </Page>

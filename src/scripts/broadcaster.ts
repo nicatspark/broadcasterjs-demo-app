@@ -231,7 +231,9 @@ const eventBus = (): ReturnType => {
     settings?: SettingsType
   }) {
     if ((!globalDebug && !force) || settings?.suppresDebug) return
-    console.log(`%cBroadcast: ${string}`, 'color:#bada55', obj ? obj : '--')
+    const style =
+      'color:#bada55;background:#666;padding:0.3rem 0.5rem;border-radius:3px'
+    console.log(`%c${string}`, style, obj ? obj : '--')
   }
 }
 const broadcast = eventBus()
