@@ -70,7 +70,7 @@ export const PageBenefits = () => {
           </li>
           <li>
             <Ttip data-tool-tip='You are in control.'>
-              Inspectable and debugable.
+              Inspectable and debuggable.
             </Ttip>
           </li>
           <li>
