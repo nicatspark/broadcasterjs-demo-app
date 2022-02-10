@@ -11,7 +11,8 @@ export const PageBenefits = () => {
         <ul>
           <li>
             <Ttip data-tool-tip='And that makes for happier developers ❤️'>
-              Creating decoupled components makes for easier refactoring.
+              Creating decoupled components makes for easier
+              refactoring/maintenance.
             </Ttip>
           </li>
           <li>
@@ -49,7 +50,7 @@ export const PageBenefits = () => {
             </Ttip>
           </li>
           <li>
-            <Ttip data-tool-tip="I'd put a debouncer on a scroll event anyway. Just sayin'.">
+            <Ttip data-tool-tip="I'd put a debouncer/throttle on a scroll event anyway. Just sayin'.">
               Native. (Performant)
             </Ttip>
           </li>
@@ -78,7 +79,9 @@ export const PageBenefits = () => {
               Unintrusive as a dependency.
             </Ttip>
           </li>
-          <li>No own dependecies.</li>
+          <Ttip data-tool-tip='Less risc...'>
+            <li>No own dependecies.</li>
+          </Ttip>
         </ul>
       </div>
     </Page>
