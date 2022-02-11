@@ -51,12 +51,16 @@ export const PageGetStarted = () => {
       <p className='limited'>
         The clean-up return function is optional, BroadcasterJS is managing this
         anyway but React migth warn about memory leaks never the less. A
-        identical subscriber (flag + callback combination) can only be set once
+        identical subscriber (flag + callback combination) can only be{' '}
+        <abbr title='Unless you tell otherwise in the settings object.'>
+          {' '}
+          once
+        </abbr>{' '}
         so no worries about rerenders.
       </p>
       <p className='limited'>
         Setting the flag in upper case is just a best practice which makes for
-        easier code overview.
+        better code maintainability.
       </p>
       <p
         className='limited'
