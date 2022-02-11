@@ -19,6 +19,8 @@ export const Page = styled.section`
   max-height: calc(100vh - var(--header-height) - var(--footer-height));
   overflow: scroll;
   padding-bottom: 10rem;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 0.5rem;
   h1 {
     text-align: center;
     margin-top: max(15vh - 50px, 4rem);

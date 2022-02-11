@@ -51,12 +51,19 @@ header h1 {
 }
 
 .section {
+  scroll-snap-align: start;
   position: relative;
-  height: 300px;
+  height: min(
+    300px,
+    calc((100vh - var(--footer-height) - var(--header-height) - 7rem) / 2)
+  );
   min-width: 300px;
   display: grid;
   place-items: center;
   border: 1px solid #000;
+}
+.section:first-child-of-type {
+  scroll-snap-align: start;
 }
 
 .wrapper {
