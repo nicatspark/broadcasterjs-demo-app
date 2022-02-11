@@ -12,7 +12,7 @@ export const Pages = styled.div`
   left: 0;
 `
 
-export const Page = styled.div`
+export const Page = styled.section`
   min-width: calc(100vw - var(--menu-min-width));
   outline: 1px solid #eee;
   padding: 0 1rem;
@@ -22,6 +22,9 @@ export const Page = styled.div`
   h1 {
     text-align: center;
     margin-top: max(15vh - 50px, 4rem);
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-size: min(max(2rem, 7vw), 5rem);
   }
   .limited {
     max-width: 35rem;
