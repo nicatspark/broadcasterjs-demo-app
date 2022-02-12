@@ -29,7 +29,7 @@ const Triangle = styled.div`
   border-color: ${({ right }: { right: boolean }) =>
     !right
       ? 'transparent var(--bg-color) transparent transparent'
-      : 'transparent transparent transparent #000000'};
+      : 'transparent transparent transparent var(--bg-color)'};
   transform-origin: center;
   transform: scale(1);
   transition: all 0.5s ease-out;
@@ -72,7 +72,9 @@ export const Pageflipper = () => {
     const gotoPage = Math.min(currentPage + 1, maxNumberOfPage)
     if (gotoPage === currentPage) {
       rightTri.current?.classList.add('shake')
-      setTimeout(() => leftTri.current?.classList.remove('shake'), 4.72 * 1000)
+      setTimeout(() => {
+        rightTri.current?.classList.remove('shake')
+      }, 1000)
       return
     }
     broadcast.emit('SET-PAGE', gotoPage)

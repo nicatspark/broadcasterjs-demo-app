@@ -58,6 +58,7 @@ export const Logoimage = styled.div`
   top: 6rem;
   height: 80px;
   isolation: isolate;
+  filter: blur(0.5px);
   img {
     width: 80px;
   }
