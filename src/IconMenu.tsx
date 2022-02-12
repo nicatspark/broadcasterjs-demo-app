@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 const NaviconWrapper = styled.div`
   position: relative;
   position: absolute;
@@ -10,9 +11,9 @@ const NaviconWrapper = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding-top: 1rem;
+  cursor: pointer;
   .navicon {
     --transform-timing: transform 300ms ease-out 300ms;
-    cursor: pointer;
     &.open .top {
       transition: var(--transform-timing);
       transform-origin: 2.5px 4.5px;
