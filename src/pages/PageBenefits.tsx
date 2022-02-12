@@ -6,7 +6,7 @@ export const PageBenefits = () => {
       <h1>Benefits</h1>
       <div className='limited'>
         <h2>
-          Benefits to useing a <mark>pub/sub pattern</mark> in general
+          Benefits of using a <mark>pub/sub pattern</mark> in general
         </h2>
         <ul>
           <li>

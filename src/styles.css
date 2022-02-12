@@ -104,7 +104,7 @@ details > mark {
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, 01rem) rotate(-2deg);
+  transform: translate(-50%, 01rem) rotate(0deg);
   filter: drop-shadow(0 0 5px white);
   white-space: nowrap;
   -webkit-font-smoothing: antialiased;
