@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { broadcast } from './scripts/broadcaster'
 import { sleep } from './scripts/helpers'
@@ -66,7 +66,7 @@ export const Drawer = () => {
   const drawer = useRef<HTMLElement | null>(null)
 
   const handleDrawerClick = (e?: React.SyntheticEvent) => {
-    broadcast.emit('MENU-TOGGLED')
+    broadcast.emit('MENU-TOGGLED') // No receiver yet but it's an event we likely will need.
     setDrawerOpen((toggel) => !toggel)
     setShowPieTimer(false)
     if (!e) return
@@ -95,6 +95,15 @@ export const Drawer = () => {
     await sleep(300)
     handleDrawerClick()
   }
+
+  useEffect(() => {
+    broadcast.on([
+      'SET-PAGE',
+      ({ detail: page }: { detail: number }) => {
+        setPage(page)
+      },
+    ])
+  }, [])
 
   const handleOnMouseOver = () => {
     autoCloseId.map((id) => clearTimeout(id))
