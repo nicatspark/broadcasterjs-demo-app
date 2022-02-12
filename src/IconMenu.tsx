@@ -5,9 +5,11 @@ const NaviconWrapper = styled.div`
   top: 0;
   right: 0;
   width: var(--menu-min-width);
-  height: var(--menu-min-width);
-  display: grid;
-  place-items: center;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1rem;
   .navicon {
     --transform-timing: transform 300ms ease-out 300ms;
     cursor: pointer;
