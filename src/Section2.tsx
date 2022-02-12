@@ -1,15 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { Section } from './pages/pages.styles'
 import { broadcast } from './scripts/broadcaster'
-import styled from 'styled-components'
-
-const Section = styled.div`
-  transition: border-color 3s, background-color 3s;
-  &.rerendered {
-    border-color: yellow;
-    background-color: yellow;
-    transition: none;
-  }
-`
 
 interface ChildrenAndProps {
   children?: JSX.Element

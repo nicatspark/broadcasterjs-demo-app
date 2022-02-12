@@ -29,6 +29,7 @@ export const Page = styled.section`
     font-style: italic;
     font-size: min(max(2rem, 7vw), 5rem);
     position: relative;
+    color: #000000;
   }
   .limited {
     max-width: 35rem;
@@ -48,6 +49,43 @@ const ping = keyframes`
   to {
     transform: translate(-50%, -50%) scale(5);
     opacity: 0;
+  }
+`
+
+export const Section = styled.div`
+  transition: border-color 3s, background-color 3s;
+  position: relative;
+  &.rerendered {
+    border-color: yellow;
+    background-color: yellow;
+    transition: none;
+  }
+  &.emitter:after {
+    background-image: url('https://hervy.s3.eu-north-1.amazonaws.com/broadcaster.jpg');
+  }
+  &.receiver:after {
+    background-image: url('https://hervy.s3.eu-north-1.amazonaws.com/listener.jpg');
+  }
+  &:after {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    mix-blend-mode: darken;
+    opacity: 0.1;
+  }
+`
+
+export const Contact = styled.div`
+  padding: 0.5em 1em;
+  font-size: 0.7rem;
+  a {
+    color: #666;
+    text-decoration: none;
   }
 `
 

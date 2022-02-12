@@ -1,5 +1,5 @@
-import React from 'react'
 import { Button } from './Button'
+import { Section } from './pages/pages.styles'
 import { broadcast } from './scripts/broadcaster'
 
 interface ChildrenAndProps {
@@ -12,9 +12,9 @@ export const Section1 = ({ children }: ChildrenAndProps): JSX.Element => {
   }
 
   return (
-    <div className='section'>
+    <Section className='section emitter'>
       <p>Emitter</p>
       <Button onClick={handleButton} />
-    </div>
+    </Section>
   )
 }
