@@ -9,6 +9,10 @@ const HeaderH1 = styled.h1`
   small {
     font-size: 1rem;
     margin-left: 1rem;
+    display: none;
+    @media (min-width: 756px) {
+      display: inline;
+    }
   }
 `
 

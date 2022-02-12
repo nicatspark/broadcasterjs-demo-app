@@ -57,14 +57,13 @@ const eventBus = (): ReturnType => {
         obj: broadcastItemsCache,
       })
     }
-    if (options.debug)
-      debugmode({
-        string: `${
-          exists ? 'Updating listener scope' : 'Setting new listener'
-        } for "${type}"`,
-        obj: listener,
-        force: true,
-      })
+    debugmode({
+      string: `${
+        exists ? `Updating listener scope for ${id}` : 'Setting new listener'
+      } for "${type} (id:${id}})"`,
+      obj: listener,
+      force: options.debug,
+    })
     const eventTarget = createOrGetCustomEventNode(hubId)
     eventTarget.addEventListener(
       'broadcast-' + type,
@@ -100,13 +99,12 @@ const eventBus = (): ReturnType => {
     settings = defaultSettings,
   ]: listenerProp<T>) => {
     const options = setOptions(settings)
-    if (options.debug)
-      debugmode({
-        string: `Removing listener "${type}"`,
-        obj: listener,
-        force: true,
-        settings,
-      })
+    debugmode({
+      string: `Removing listener "${type}"`,
+      obj: listener,
+      force: options.debug,
+      settings,
+    })
     handleCache().remove(type, listener)
     const eventTarget = createOrGetCustomEventNode(hubId)
     eventTarget.removeEventListener(
@@ -162,7 +160,7 @@ const eventBus = (): ReturnType => {
       })
       if (broadcastItemsCache.indexOf(type + id) !== -1) {
         debugmode({
-          string: 'Found a previous instans of subscriber.',
+          string: `Found a previous instans of ${type}.`,
           force: settings.debug,
         })
         return { exists: true, id }
@@ -245,9 +243,9 @@ export { broadcast }
   
   START SUBSCRIPTION IN REACT
   useEffect(() => {
-    broadcast.on(['BROADCAST-ID', flagEmittedCallbackFunction])
-    return () => broadcast.off(['BROADCAST-ID', flagEmittedCallbackFunction])
-  }, [flagEmittedCallbackFunction])
+    broadcast.on(['BROADCAST-ID', myFlagEmittedCallbackFunction])
+    return () => broadcast.off(['BROADCAST-ID', myFlagEmittedCallbackFunction])
+  }, [myFlagEmittedCallbackFunction])
   
   START SUBSCRIPTION VANILLA JS
   broacast.on(['BROADCAST-ID', ({ detail }) => {

@@ -39,6 +39,8 @@ const Triangle = styled.div`
   }
 `
 
+const shakeAnimMS = 1000
+
 export const Pageflipper = () => {
   const [disableLeft, setDisableLeft] = useState(false)
   const [disableRight, setDisableRight] = useState(false)
@@ -59,11 +61,10 @@ export const Pageflipper = () => {
   }, [])
 
   const handleLeftClick = () => {
-    const gotoPage = Math.min(currentPage - 1, 1)
+    const gotoPage = Math.max(currentPage - 1, 1)
     if (gotoPage === currentPage) {
-      debugger
       leftTri.current?.classList.add('shake')
-      setTimeout(() => leftTri.current?.classList.remove('shake'), 4.72 * 1000)
+      setTimeout(() => leftTri.current?.classList.remove('shake'), shakeAnimMS)
       return
     }
     broadcast.emit('SET-PAGE', Math.max(currentPage - 1, 1))
@@ -74,7 +75,7 @@ export const Pageflipper = () => {
       rightTri.current?.classList.add('shake')
       setTimeout(() => {
         rightTri.current?.classList.remove('shake')
-      }, 1000)
+      }, shakeAnimMS)
       return
     }
     broadcast.emit('SET-PAGE', gotoPage)
