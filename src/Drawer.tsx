@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { broadcast } from './scripts/broadcaster'
 import { sleep } from './scripts/helpers'
