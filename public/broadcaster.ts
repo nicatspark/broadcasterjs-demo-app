@@ -245,8 +245,9 @@ export { broadcast }
   
   START SUBSCRIPTION IN REACT
   useEffect(() => {
-    broadcast.on(['BROADCAST-ID', flagReceivedFunction])
-  }, [flagReceivedFunction])
+    broadcast.on(['BROADCAST-ID', flagEmittedCallbackFunction])
+    return () => broadcast.off(['BROADCAST-ID', flagEmittedCallbackFunction])
+  }, [flagEmittedCallbackFunction])
   
   START SUBSCRIPTION VANILLA JS
   broacast.on(['BROADCAST-ID', ({ detail }) => {
@@ -277,7 +278,7 @@ export { broadcast }
     debug: boolean
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
-    useLatestSubscriberScope: true,
-    suppressDebug: false,
+    useLatestSubscriberScope: true, // <- internal use
+    suppressDebug: false, // <- internal use
   }
   */

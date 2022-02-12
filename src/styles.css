@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono&family=Rock+Salt&display=swap');
 :root {
   --menu-min-width: 3rem;
   --visible-width: calc(100vw - var(--menu-min-width));
@@ -96,6 +95,19 @@ details > mark {
 
 .center {
   text-align: center;
+}
+.goahead-note {
+  font-family: 'Rock Salt';
+  font-size: 0.8rem;
+  color: #555;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 01rem) rotate(-2deg);
+  filter: drop-shadow(0 0 5px white);
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* pie timer */

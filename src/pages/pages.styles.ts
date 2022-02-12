@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { keyframes } from 'styled-components'
 
 // Using passed-props as SC example,
 // prefer a css custom vars solution for this.
@@ -27,11 +28,53 @@ export const Page = styled.section`
     font-family: 'Playfair Display';
     font-style: italic;
     font-size: min(max(2rem, 7vw), 5rem);
+    position: relative;
   }
   .limited {
     max-width: 35rem;
     margin: 1.5rem auto;
     line-height: 1.8rem;
+  }
+`
+
+const ping = keyframes`
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0;
+  }
+`
+
+export const Logoimage = styled.div`
+  display: grid;
+  place-items: center;
+  position: relative;
+  top: 6rem;
+  height: 80px;
+  isolation: isolate;
+  img {
+    width: 80px;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(5);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    animation: ${ping} 4s ease-out infinite;
+    z-index: -1;
+    filter: blur(2px);
   }
 `
 

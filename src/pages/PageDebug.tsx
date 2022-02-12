@@ -3,7 +3,12 @@ import { Block, Page, Separator } from './pages.styles'
 export const PageDebug = () => {
   return (
     <Page>
-      <h1>Debug</h1>
+      <h1>
+        Debug
+        <div className='goahead-note'>
+          Psst! Go ahead, try it on this site now -&gt;
+        </div>
+      </h1>
       <p className='limited'>
         So you implemented it and then things went south. Well, here is how to
         debug.
@@ -18,6 +23,10 @@ export const PageDebug = () => {
         Select the node in dev-tools/elements tab and open event-listeners tab
         in second pane in dev-tools and all active listeners will be listed.
         Those starting with 'broadcast-' are yours.
+        <img
+          src='https://www.dropbox.com/s/bh6anmxwtidza9c/broadcastjs-inspect.jpg?dl=0'
+          alt='Screenshot of node in html that lists all element.'
+        />
       </details>
       <details className='limited'>
         <summary>
