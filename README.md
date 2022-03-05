@@ -108,7 +108,7 @@ For more specific usage and examples, see the MDN documentation, not here.
 [window.postMessage-MDN documentation](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage)
 [Broadcast Channel API-MDN documentation](https://developer.mozilla.org/zh-CN/docs/Web/API/Broadcast_Channel_API)
 
-## Other methods
+## Other methods to pass inter-page data
 
 For inter-page interaction, there are other more ways to.
 
@@ -118,6 +118,8 @@ For inter-page interaction, there are other more ways to.
 - pass data through localStorage, you can actively get, you can also use `window.addEventListener("storage", callback)` event trigger to get (the same, IndexedDB, Cookie and other storage solutions can be achieved between pages to pass data)
 - Shared Worker or Service Worker
 - These methods in increasing order of difficulty, but of course more powerful, for reference!
+
+Using a broadcast function is in some way tied together with a global state. A global state manager like Redux could also be used for passing flags and data but every state change will ten force re-renders for all components connected with a listener even when the flag is not ment for that specific component.
 
 [Reference](https://kaifeiji.cc/post/interactions-between-windows-postmessage-and-broadcastchannel/)
 

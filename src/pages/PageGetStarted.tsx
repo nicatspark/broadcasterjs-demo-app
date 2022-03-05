@@ -17,11 +17,13 @@ export const PageGetStarted = () => {
         <p>Import broadcaster.ts</p>
         <code>import broadcast from "./broadcast";</code>
         <p>Subscribe:</p>
-        <code>{`broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])`}</code>
+        <code>{`const off = broadcast.on(['EXAMPLE-FLAG', ({detail: myData}) => setMyUseState(myData)])`}</code>
         <p>Publish:</p>
-        <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: someVarToEmit})`}</code>
+        <code>{`broadcast.emit('EXAMPLE-FLAG')`}</code>
         <p>Publish with some payload data:</p>
-        <code>{`broadcast.emit('EXAMPLE-FLAG', {detail: myData})`}</code>
+        <code>{`broadcast.emit('EXAMPLE-FLAG', myData)`}</code>
+        <p>Unsubscribe (execute the subscribe return function):</p>
+        <code>{`off()`}</code>
       </Block>
       <p className='limited'>
         BroadcasterJS is a pub/sub event transmitter written in typescript. A
@@ -36,24 +38,21 @@ export const PageGetStarted = () => {
         the subscriber in a useEffect like so. Emitters can be trigger anywhere.
       </p>
       <Block limit='30rem'>
-        <p>In React wrap the subscriber in a useEffect:</p>
+        <p>
+          In React wrap the subscriber in a useEffect, return the return
+          function if unmount should terminate the subscription:
+        </p>
         {/* // prettier-ignore */}
         <pre style={{ lineHeight: '1.5rem' }}>
           <code>{`useEffect(() => {
-    broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)])
-    return () => broadcast.off(['EXAMPLE-FLAG', () => setMyUseState(true)])
+    const off = broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)]);
+    return off; // <- optional turns off subscription on unmount.
   }, [])`}</code>
         </pre>
       </Block>
       <p className='limited'>
-        The clean-up return function is optional, BroadcasterJS is managing this
-        anyway but React migth warn about memory leaks never the less. A
-        identical subscriber (flag + callback combination) can only be{' '}
-        <abbr title='Unless you tell otherwise in the settings object.'>
-          {' '}
-          once
-        </abbr>{' '}
-        so no worries about rerenders.
+        Only one of each subscribers (flag + listener combination) is set. A
+        rerender will not add the same subscriber again.
       </p>
       <p className='limited'>
         Setting the flag in upper case is just a best practice which makes for

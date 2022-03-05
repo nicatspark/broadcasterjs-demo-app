@@ -17,6 +17,12 @@ export interface ReturnType {
   emit: (type: string, detail?: unknown) => boolean
 }
 
+interface EventListenerOptionsType {
+  passive?: boolean
+  once?: boolean
+  capture?: boolean
+}
+
 export interface SettingsType {
   debug?: boolean
   debugGlobal?: boolean
@@ -24,6 +30,8 @@ export interface SettingsType {
   useLatestSubscriberScope?: boolean
   suppressDebug?: boolean
 }
+
+type SetterReturnType = null | (() => void)
 
 let broadcastItemsCache: string[] = []
 
@@ -45,11 +53,11 @@ const eventBus = (): ReturnType => {
     type,
     listener,
     settings = defaultSettings,
-  ]: listenerProp<T>): string => {
+  ]: listenerProp<T>): SetterReturnType => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
     if (exists && !options.allowDoublettesSubscribers) {
-      if (!options.useLatestSubscriberScope) return id
+      if (!options.useLatestSubscriberScope) return null
       // Remove previous listener and set new to update scope.
       off([type, listener, { suppressDebug: true }])
       debugmode({
@@ -65,11 +73,11 @@ const eventBus = (): ReturnType => {
       force: options.debug,
     })
     const eventTarget = createOrGetCustomEventNode(hubId)
-    eventTarget.addEventListener(
-      'broadcast-' + type,
-      listener as EventListenerOrEventListenerObject
-    )
-    return id
+    const unbind = helpers().bind(eventTarget, {
+      type: ('broadcast-' + type) as keyof HTMLElementEventMap,
+      listener: listener as EventListenerOrEventListenerObject,
+    })
+    return unbind
   }
   const once = <T extends unknown>([
     type,
@@ -86,18 +94,23 @@ const eventBus = (): ReturnType => {
         force: true,
       })
     const eventTarget = createOrGetCustomEventNode(hubId)
-    eventTarget.addEventListener(
-      'broadcast-' + type,
-      listener as EventListenerOrEventListenerObject,
-      { once: true }
-    )
-    return id
+    const unbind = helpers().bind(eventTarget, {
+      type: ('broadcast-' + type) as keyof HTMLElementEventMap,
+      listener: listener as EventListenerOrEventListenerObject,
+      options: { once: true },
+    })
+    return unbind
   }
   const off = <T extends unknown>([
     type,
     listener,
     settings = defaultSettings,
   ]: listenerProp<T>) => {
+    if (typeof (listener as Function)?.prototype === 'undefined') {
+      throw new Error(
+        'Listener function not passed as a reference will not match previously set Broadcast listener.'
+      )
+    }
     const options = setOptions(settings)
     debugmode({
       string: `Removing listener "${type}"`,
@@ -214,7 +227,24 @@ const eventBus = (): ReturnType => {
       s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0)
     const serializeFn = (f: () => void, env: unknown) =>
       JSON.stringify({ src: f.toString(), env: env })
-    return { serializeFn, hashCode }
+    const bind = (
+      target: Node,
+      {
+        type,
+        listener,
+        options,
+      }: {
+        type: keyof HTMLElementEventMap
+        listener: EventListenerOrEventListenerObject
+        options?: EventListenerOptionsType
+      }
+    ) => {
+      target.addEventListener(type, listener, options)
+      return function unbind() {
+        target.removeEventListener(type, listener, options)
+      }
+    }
+    return { serializeFn, hashCode, bind }
   }
 
   function debugmode({
@@ -242,25 +272,24 @@ export { broadcast }
   No need to initialize separately. Import the 'broadcast' factory function and use to your hearts content.
   
   START SUBSCRIPTION IN REACT
+  Return the `off` function if it is desired to stop subscription on unmount.
   useEffect(() => {
-    broadcast.on(['BROADCAST-ID', myFlagEmittedCallbackFunction])
-    return () => broadcast.off(['BROADCAST-ID', myFlagEmittedCallbackFunction])
-  }, [myFlagEmittedCallbackFunction])
+    const off = broadcast.on(['BROADCAST-ID', myCallbackFunction])
+    return off
+  }, [myCallbackFunction])
   
   START SUBSCRIPTION VANILLA JS
-  broacast.on(['BROADCAST-ID', ({ detail }) => {
+  const off = broacast.on(['BROADCAST-ID', ({ detail }) => {
       document.body.append(detail + ' ');
   }]);
-  broacast.once(['BROADCAST-ID', ({ detail }) => {
+  const off = broacast.once(['BROADCAST-ID', ({ detail }) => {
       document.body.append(detail + ' ');
   }]);
   
   END SUBSCRIPTION
-  broacast.off(['BROADCAST-ID', ({ detail }) => {
-      document.body.append(detail + ' ');
-  }]);
+  Execute the function returned by the subscribe function.
   
-  PUBLISH IN REACT & VANILLLA JS
+  PUBLISH (REACT & VANILLLA JS)
   broadcast.emit('BROADCAST-ID', 'Hello world')
   
   TO INSPECT VISUALLY
@@ -270,7 +299,7 @@ export { broadcast }
   
   To debug: add ?debug=BroadcasterJS in url and open devtools console.
   
-  Advanced: on,once,off takes an optional third value and emit takes 
+  Advanced: function `on` and `once` takes an optional third value and emit takes 
   an optional third argument in the form of a settings object.
   {
     debug: boolean
