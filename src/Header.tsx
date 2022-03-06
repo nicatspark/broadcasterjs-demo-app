@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { broadcast } from './scripts/broadcaster'
+import { broadcast } from '@foundit/broadcasterjs'
 
 const HeaderH1 = styled.h1`
   display: inline-block;

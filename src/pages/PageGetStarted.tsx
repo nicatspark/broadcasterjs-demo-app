@@ -15,15 +15,17 @@ export const PageGetStarted = () => {
         <p>Install broadcasterjs (or copy code)</p>
         <code>npm i @foundit/broadcasterjs</code>
         <p>Import broadcaster.ts</p>
-        <code>import broadcast from "./broadcast";</code>
+        <code>
+          import &#123; broadcast &#125; from '@foundit/broadcasterjs'
+        </code>
         <p>Subscribe:</p>
         <code>{`const off = broadcast.on(['EXAMPLE-FLAG', ({detail: myData}) => setMyUseState(myData)])`}</code>
         <p>Publish:</p>
-        <code>{`broadcast.emit('EXAMPLE-FLAG')`}</code>
+        <code>&#123;`broadcast.emit('EXAMPLE-FLAG')`&#125;</code>
         <p>Publish with some payload data:</p>
-        <code>{`broadcast.emit('EXAMPLE-FLAG', myData)`}</code>
+        <code>&#123;`broadcast.emit('EXAMPLE-FLAG', myData)`&#125;</code>
         <p>Unsubscribe (execute the subscribe return function):</p>
-        <code>{`off()`}</code>
+        <code>&#123;`off()`&#125;</code>
       </Block>
       <p className='limited'>
         BroadcasterJS is a pub/sub event transmitter written in typescript. A

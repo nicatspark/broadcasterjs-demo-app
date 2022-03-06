@@ -1,6 +1,6 @@
 import { Button } from './Button'
 import { Section } from './pages/pages.styles'
-import { broadcast } from './scripts/broadcaster'
+import { broadcast } from '@foundit/broadcasterjs'
 
 interface ChildrenAndProps {
   children?: JSX.Element

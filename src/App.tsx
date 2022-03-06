@@ -2,7 +2,7 @@ import './styles.css'
 
 import { Drawer } from './Drawer'
 import { useEffect, useState } from 'react'
-import { broadcast } from './scripts/broadcaster'
+import { broadcast } from '@foundit/broadcasterjs'
 import { Pages } from './pages/pages.styles'
 import { PageCode } from './pages/PageCode'
 import { Header } from './Header'
