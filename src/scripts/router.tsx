@@ -24,12 +24,18 @@ interface PushStateObj {
   urlPath?: string
 }
 
+let onceOnly = ''
 /**
  * Responsible for setting the URL without reloading.
  */
 const history = Object.create({
-  pushState: (response: PushStateObj) => {
-    const pageTitle = response.pageTitle || document.title
+  pushState: function (response: PushStateObj) {
+    if (onceOnly === response.urlPath) return
+    onceOnly = response.urlPath || ''
+    const pageTitle = response.pageTitle
+      ? route.baseTitle + response.pageTitle
+      : document.title
+    document.title = pageTitle
     const urlPath = response.urlPath || '/'
     window.history.pushState(
       { html: response.html, pageTitle: pageTitle },
