@@ -6,7 +6,7 @@ export const PageDebug = () => {
       <h1>
         Debug
         <div className='goahead-note'>
-          Psst! Go ahead, try it on this site now -&gt;
+          Psst! Go ahead, try inspect in devtools on this site now -&gt;
         </div>
       </h1>
       <p className='limited'>
@@ -69,11 +69,6 @@ export const PageDebug = () => {
         as a third value in the subscriber array. The subscriber argument array
         would look something like{' '}
         <mark>{`['MY-EXAMPLE-FLAG', myCallbackFnToRunOnEvent, {allowDoublettesSubscribers:true}]`}</mark>
-      </p>
-      <p className='limited'>
-        The broadcast subscriber function also returns an unique id for the flag
-        + callback combination if you want to handle the doublette guard
-        externally for some reason.
       </p>
 
       <h3 className='limited'>Invoke the global debug</h3>

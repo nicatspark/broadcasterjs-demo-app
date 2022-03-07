@@ -21,11 +21,11 @@ export const PageGetStarted = () => {
         <p>Subscribe:</p>
         <code>{`const off = broadcast.on(['EXAMPLE-FLAG', ({detail: myData}) => setMyUseState(myData)])`}</code>
         <p>Publish:</p>
-        <code>&#123;`broadcast.emit('EXAMPLE-FLAG')`&#125;</code>
+        <code>broadcast.emit('EXAMPLE-FLAG')</code>
         <p>Publish with some payload data:</p>
-        <code>&#123;`broadcast.emit('EXAMPLE-FLAG', myData)`&#125;</code>
+        <code>broadcast.emit('EXAMPLE-FLAG', myData)</code>
         <p>Unsubscribe (execute the subscribe return function):</p>
-        <code>&#123;`off()`&#125;</code>
+        <code>off()</code>
       </Block>
       <p className='limited'>
         BroadcasterJS is a pub/sub event transmitter written in typescript. A
