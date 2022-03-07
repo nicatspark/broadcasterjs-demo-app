@@ -12,6 +12,7 @@ interface HistoryType {
 
 interface RouteType {
   _routeState: Map<PageId, PageData>
+  state: Map<PageId, PageData>
   history: HistoryType
   baseRoute?: string
   baseTitle?: string
@@ -53,12 +54,6 @@ const route = {
   history,
   baseRoute: '',
   baseTitle: '',
-  //   set initiate(initObj: RouteState<PageId, PageNumber>) {
-  //     this._routeState = initObj
-  //   },
-  //   set SET({ path, index }: { path: string; index: number }) {
-  //     this._routeState.set(path, index)
-  //   },
   get state() {
     return this._routeState
   },
@@ -87,7 +82,6 @@ const Route = ({
     const pathURL =
       route.baseRoute + '/' + document.location.pathname.split('/')[1]
     route._routeState.set(path, { index, title })
-    if (path === pathURL) console.log(`MiniRoute matched '${path}'`)
     return path === pathURL
   }
   return <>{getPath({ path, index, title }) && <>{component}</>}</>
@@ -109,14 +103,5 @@ const MiniRoute = ({
 
   return <>{children}</>
 }
-
-// Initiate in app.
-// route.initiate = new Map([
-//   ['getstarted', 1],
-//   ['benefits', 2],
-//   ['liveexample', 3],
-//   ['sourcecode', 4],
-//   ['debug', 5],
-// ])
 
 export { route, Route, MiniRoute }

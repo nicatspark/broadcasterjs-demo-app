@@ -23,9 +23,9 @@ export default function App() {
         setCurrentPage(page)
         // Update url w/o reload
         route.history.pushState({
-          html: Array.from(route._routeState)[page - 1][0],
-          pageTitle: Array.from(route._routeState)[page - 1][1].title,
-          urlPath: Array.from(route._routeState)[page - 1][0],
+          html: Array.from(route.state)[page - 1][0],
+          pageTitle: Array.from(route.state)[page - 1][1].title,
+          urlPath: Array.from(route.state)[page - 1][0],
         })
       },
     ])
@@ -78,7 +78,6 @@ export default function App() {
 function Redirect({ page }: { page: number }) {
   // Sole purpose to redirect on load.
   useEffect(() => {
-    console.log(`MiniRoute is setting page ${page}`)
     setTimeout(() => broadcast.emit('SET-PAGE', page), 300)
   }, [page])
   return <></>
