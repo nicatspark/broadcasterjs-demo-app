@@ -255,7 +255,7 @@ export const PageCode = () => {
       </pre>
       <p className='limited small'>
         (Even if BroadcasterJS is simple to use the source code for this site is
-        public with plenty of examples can be scrutinised here:{' '}
+        public with plenty of examples that can be scrutinised here:{' '}
         <a href='https://github.com/nicatspark/broadcasterjs'>
           https://github.com/nicatspark/broadcasterjs
         </a>
