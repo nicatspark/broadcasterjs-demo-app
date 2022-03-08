@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // type RouteState<K extends string, T> = { [P in K]: T }
 type PageId = string
@@ -16,6 +16,7 @@ interface RouteType {
   history: HistoryType
   baseRoute?: string
   baseTitle?: string
+  push: PushStateObj
   //   SET: (path: string, l: number) => void
 }
 
@@ -24,6 +25,12 @@ interface PushStateObj {
   pageTitle?: string
   urlPath?: string
 }
+
+// window.addEventListener('popstate', (event) => {
+//   console.log(
+//     'location: ' + document.location + ', state: ' + JSON.stringify(event.state)
+//   )
+// })
 
 let onceOnly = ''
 /**
@@ -46,6 +53,17 @@ const history = Object.create({
   },
 })
 
+const browserBack = (
+  event: PopStateEvent,
+  _forceRender: (arg: number) => void,
+  path: string
+) => {
+  if (event.state.html === path) {
+    console.log(`Backing into ${path}`)
+    _forceRender(Math.random())
+  }
+}
+
 /**
  * Main object.
  */
@@ -56,6 +74,10 @@ const route = {
   baseTitle: '',
   get state() {
     return this._routeState
+  },
+  set push({ html, pageTitle, urlPath }: PushStateObj) {
+    // TODO: Not working. Use _routeState.set for now.
+    this._routeState.set(urlPath || '', { index: 2, title: pageTitle || '' })
   },
 } as RouteType
 
@@ -70,6 +92,8 @@ const Route = ({
   component?: React.ReactNode
   title?: string
 }): JSX.Element => {
+  const [, _forceRender] = useState(0)
+
   const getPath = ({
     path,
     index,
@@ -79,11 +103,29 @@ const Route = ({
     index: number
     title: string
   }): boolean => {
+    const baseRoute = route.baseRoute || ''
+    console.assert(
+      /^\//.test(baseRoute) || baseRoute.length === 0,
+      `baseRoute must begin with a '/'`
+    )
     const pathURL =
-      route.baseRoute + '/' + document.location.pathname.split('/')[1]
+      baseRoute +
+      '/' +
+      document.location.pathname.replace(baseRoute, '').split('/')[1]
     route._routeState.set(path, { index, title })
     return path === pathURL
   }
+
+  useEffect(() => {
+    window.addEventListener('popstate', (e) =>
+      browserBack(e, _forceRender, path)
+    )
+    return () =>
+      window.removeEventListener('popstate', (e) =>
+        browserBack(e, _forceRender, path)
+      )
+  })
+
   return <>{getPath({ path, index, title }) && <>{component}</>}</>
 }
 
