@@ -27,21 +27,15 @@ interface PushStateObj {
   urlPath?: string
 }
 
-// window.addEventListener('popstate', (event) => {
-//   console.log(
-//     'location: ' + document.location + ', state: ' + JSON.stringify(event.state)
-//   )
-// })
-
 /**
- * Responsible for setting the URL without reloading.
+ * pushState: Responsible for setting the URL without reloading.
  */
 const history = Object.create({
   previousPush: '',
   pushState: function (response: PushStateObj) {
-    console.log('prev', route.history.previousPush, response.urlPath)
+    debugLog('router', 'prev', route.history.previousPush, response.urlPath)
     if (route.history.previousPush === response.urlPath) return
-    console.log('Setting', response.urlPath)
+    debugLog('router', 'Setting', response.urlPath)
     route.history.previousPush = response.urlPath || ''
     const pageTitle = response.pageTitle
       ? route.baseTitle + response.pageTitle
@@ -53,6 +47,7 @@ const history = Object.create({
       '',
       urlPath
     )
+    // TODO: add queryParams to urlPath.
   },
 })
 
@@ -63,7 +58,7 @@ const browserBack = (
 ) => {
   if (event.state.html !== path) return
   preventAddingBackUrlToHistory()
-  console.log(`Backing into ${path}`)
+  debugLog('router', `Backing into ${path}`)
   _forceRender(Math.random())
 
   function preventAddingBackUrlToHistory() {
@@ -83,7 +78,7 @@ const route = {
     return this._routeState
   },
   set push({ html, pageTitle, urlPath }: PushStateObj) {
-    // TODO: Not working. Use _routeState.set for now.
+    // TODO: Not working. Use route._routeState.set directly for now.
     this._routeState.set(urlPath || '', { index: 2, title: pageTitle || '' })
   },
 } as RouteType
@@ -156,6 +151,15 @@ const MiniRoute = ({
   })
 
   return <>{children}</>
+}
+
+function debugLog(
+  type: string,
+  output: string,
+  obj1?: unknown,
+  obj2?: unknown
+) {
+  if (new URLSearchParams().has('debug')) console.log('yaeh')
 }
 
 export { route, Route, MiniRoute }
