@@ -22,6 +22,7 @@ export default function App() {
       ({ detail: page }: { detail: number }) => {
         setCurrentPage(page)
         // Update url w/o reload
+        console.log('pushState')
         route.history.pushState({
           html: Array.from(route.state)[page - 1][0],
           pageTitle: Array.from(route.state)[page - 1][1].title,

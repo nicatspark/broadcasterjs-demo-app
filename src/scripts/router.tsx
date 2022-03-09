@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 // type RouteState<K extends string, T> = { [P in K]: T }
 type PageId = string
@@ -8,6 +8,7 @@ interface PageData {
 }
 interface HistoryType {
   pushState: (response: PushStateObj) => void
+  previousPush: string
 }
 
 interface RouteType {
@@ -32,14 +33,16 @@ interface PushStateObj {
 //   )
 // })
 
-let onceOnly = ''
 /**
  * Responsible for setting the URL without reloading.
  */
 const history = Object.create({
+  previousPush: '',
   pushState: function (response: PushStateObj) {
-    if (onceOnly === response.urlPath) return
-    onceOnly = response.urlPath || ''
+    console.log('prev', route.history.previousPush, response.urlPath)
+    if (route.history.previousPush === response.urlPath) return
+    console.log('Setting', response.urlPath)
+    route.history.previousPush = response.urlPath || ''
     const pageTitle = response.pageTitle
       ? route.baseTitle + response.pageTitle
       : document.title
@@ -58,9 +61,13 @@ const browserBack = (
   _forceRender: (arg: number) => void,
   path: string
 ) => {
-  if (event.state.html === path) {
-    console.log(`Backing into ${path}`)
-    _forceRender(Math.random())
+  if (event.state.html !== path) return
+  preventAddingBackUrlToHistory()
+  console.log(`Backing into ${path}`)
+  _forceRender(Math.random())
+
+  function preventAddingBackUrlToHistory() {
+    route.history.previousPush = path
   }
 }
 
@@ -93,6 +100,7 @@ const Route = ({
   title?: string
 }): JSX.Element => {
   const [, _forceRender] = useState(0)
+  const listenerSet = useRef(false)
 
   const getPath = ({
     path,
@@ -117,13 +125,17 @@ const Route = ({
   }
 
   useEffect(() => {
+    if (listenerSet.current) return
+    listenerSet.current = true
     window.addEventListener('popstate', (e) =>
       browserBack(e, _forceRender, path)
     )
-    return () =>
+    return () => {
+      listenerSet.current = false
       window.removeEventListener('popstate', (e) =>
         browserBack(e, _forceRender, path)
       )
+    }
   })
 
   return <>{getPath({ path, index, title }) && <>{component}</>}</>
