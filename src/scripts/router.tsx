@@ -126,7 +126,6 @@ const Route = ({
       browserBack(e, _forceRender, path)
     )
     return () => {
-      listenerSet.current = false
       window.removeEventListener('popstate', (e) =>
         browserBack(e, _forceRender, path)
       )
