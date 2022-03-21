@@ -72,13 +72,17 @@ export const PageGetStarted = () => {
       >
         <a
           style={{ marginTop: '0.8rem' }}
+          target='_blank'
           href='https://www.npmjs.com/package/@foundit/broadcasterjs'
+          rel='noreferrer'
         >
           <NpmLogo />
         </a>
         <a
           style={{ fontSize: '2rem' }}
+          target='_blank'
           href='https://github.com/nicatspark/broadcasterjs'
+          rel='noreferrer'
         >
           <GithubLogo />
         </a>
