@@ -34,6 +34,12 @@ const history = Object.create({
   previousPush: '',
   pushState: function (response: PushStateObj) {
     debugLog('router', 'prev', route.history.previousPush, response.urlPath)
+    console.log(
+      route.history.previousPush + '===' + response.urlPath,
+      `History entry is${
+        route.history.previousPush === response.urlPath ? ' not' : ''
+      } happening`
+    )
     if (route.history.previousPush === response.urlPath) return
     debugLog('router', 'Setting', response.urlPath)
     route.history.previousPush = response.urlPath || ''
@@ -159,6 +165,7 @@ function debugLog(
   obj2?: unknown
 ) {
   if (new URLSearchParams().has('debug')) console.log('yaeh')
+  console.log(output, obj1 || '', obj2 || '')
 }
 
 export { route, Route, MiniRoute }

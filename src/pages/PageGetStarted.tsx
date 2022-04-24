@@ -41,14 +41,14 @@ export const PageGetStarted = () => {
       </p>
       <Block limit='30rem'>
         <p>
-          In React wrap the subscriber in a useEffect, return the return
-          function if unmount should terminate the subscription:
+          In React wrap the subscriber in a useEffect. Return it if the listener
+          should unsubscribe on component unmount. Omit the return if the
+          listener should persist:
         </p>
         {/* // prettier-ignore */}
         <pre style={{ lineHeight: '1.5rem' }}>
           <code>{`useEffect(() => {
-    const off = broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)]);
-    return off; // <- optional turns off subscription on unmount.
+    return broadcast.on(['EXAMPLE-FLAG', () => setMyUseState(true)]);
   }, [])`}</code>
         </pre>
       </Block>
