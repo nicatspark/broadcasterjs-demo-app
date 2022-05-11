@@ -40,5 +40,18 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="module">
+      // https://codelabs.developers.google.com/codelabs/web-vitals-google-analytics-bigquery#1
+      // https://youtu.be/V0lL1753VHo
+      import {
+        getCLS,
+        getFID,
+        getLCP,
+      } from 'https://unpkg.com/web-vitals?module'
+
+      getCLS(console.log)
+      getFID(console.log)
+      getLCP(console.log)
+    </script>
   </body>
 </html>

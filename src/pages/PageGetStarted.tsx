@@ -58,7 +58,7 @@ export const PageGetStarted = () => {
       </p>
       <p className='limited'>
         Setting the flag in upper case is just a best practice which makes for
-        better code maintainability.
+        better code readability/&shy;maintainability.
       </p>
       <p
         className='limited'
